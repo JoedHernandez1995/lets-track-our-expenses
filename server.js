@@ -24,7 +24,10 @@ app.get('/getAllUsers', (req, res) => {
 
 app.post('/users', (req, res) => {
 	models.User.create({
-		email: req.body.email
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		email: req.body.email,
+		password: req.body.password
 	}).then((user) => {
 		res.json(user);
 	})
