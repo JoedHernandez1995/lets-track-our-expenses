@@ -22,7 +22,7 @@ app.get('/getAllUsers', (req, res) => {
 	})
 });
 
-app.post('/users', (req, res) => {
+app.post('/registrarion/createNewUser', (req, res) => {
 	models.User.create({
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
@@ -32,6 +32,9 @@ app.post('/users', (req, res) => {
 		res.json(user);
 	})
 });
+
+
+
 
 //Static file declaration
 app.use(express.static(path.join(__dirname, 'client/build')));

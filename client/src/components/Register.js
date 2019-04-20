@@ -11,8 +11,8 @@ class Register extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			first_name:'',
-			last_name:'',
+			firstName:'',
+			lastName:'',
 			email:'',
 			password:''
 		}
@@ -20,11 +20,11 @@ class Register extends Component {
 	}
 
 	handleClick(event){
-		var apiURL = "http://localhost:5000/registerUser";
+		var apiURL = "http://localhost:5000/registrarion/createNewUser";
 		var self = this;
 	    var payload = {
-		    "first_name": this.state.first_name,
-		    "last_name":this.state.last_name,
+		    "firstName": this.state.firstName,
+		    "lastName":this.state.lastName,
 		    "email":this.state.email,
 		    "password":this.state.password
 	    }
