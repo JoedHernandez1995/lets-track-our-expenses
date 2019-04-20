@@ -20,7 +20,7 @@ class Register extends Component {
 	}
 
 	handleClick(event){
-		var apiURL = "http://localhost:5000/registrarion/createNewUser";
+		var apiURL = "http://localhost:5000/authentication/createNewUser";
 		var self = this;
 	    var payload = {
 		    "firstName": this.state.firstName,

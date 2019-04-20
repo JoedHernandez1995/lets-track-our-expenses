@@ -22,7 +22,20 @@ app.get('/getAllUsers', (req, res) => {
 	})
 });
 
-app.post('/registrarion/createNewUser', (req, res) => {
+app.post('/authentication/loginUser', (req, res) => {
+	models.User.findOne({
+		where: {
+			email: req.body.email,
+			password: req.body.password
+		}
+	}).then((result) => {
+		if(result){
+			res.json(result);
+		}
+	})
+});
+
+app.post('/authentication/createNewUser', (req, res) => {
 	models.User.create({
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,

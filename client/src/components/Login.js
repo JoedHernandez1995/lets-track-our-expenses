@@ -17,7 +17,7 @@ class Login extends Component {
 	}
 
 	handleClick(event){
-		var apiBaseUrl = "http://localhost:5000/loginUser";
+		var apiBaseUrl = "http://localhost:5000/authentication/loginUser";
 		var self = this;
 		var payload = {
 			"email":this.state.username,
@@ -26,12 +26,12 @@ class Login extends Component {
 		axios.post(apiBaseUrl, payload)
 		.then((response) => {
 			console.log(response);
-			if(response.data.code == 200){
+			if(response.status == 200){
 				console.log("Login successfull");
 				var uploadScreen = [];
 				uploadScreen.push(<UploadScreen appContex={self.props.appContex}/>)
 				self.props.appContext.setState({loginPage: [], uploadScreen:uploadScreen})
-			} else if (response.data.code == 204){
+			} else if (response.status == 204){
 				console.log("Username password do not match");
 				alert("Username password do not match");
 			}else{
