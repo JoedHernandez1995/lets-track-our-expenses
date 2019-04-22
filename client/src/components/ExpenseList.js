@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class UploadScreen extends Component {
+class ExpenseList extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -11,8 +11,7 @@ class UploadScreen extends Component {
 	render() {
 		return (
 			<div>
-				
-				<h1>Hello world</h1>
+				<h1>Expenses</h1>
 			</div>
 		);
 	}
@@ -22,4 +21,4 @@ const style = {
 	margin: 15,
 }
 
-export default UploadScreen;
+export default ExpenseList;

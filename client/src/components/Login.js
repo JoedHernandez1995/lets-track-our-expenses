@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from "axios";
 
-import UploadScreen from './UploadScreen';
+import ExpenseList from './ExpenseList';
 
 class Login extends Component {
 	constructor(props){
@@ -27,9 +26,10 @@ class Login extends Component {
 		.then((response) => {
 			console.log(response);
 			if(response.status == 200){
+				localStorage.setItem("user-token", true);
 				console.log("Login successfull");
 				var uploadScreen = [];
-				uploadScreen.push(<UploadScreen appContex={self.props.appContex}/>)
+				uploadScreen.push(<ExpenseList appContex={self.props.appContex}/>)
 				self.props.appContext.setState({loginPage: [], uploadScreen:uploadScreen})
 			} else if (response.status == 204){
 				console.log("Username password do not match");
@@ -52,15 +52,14 @@ class Login extends Component {
 					
 					<div>
 						
-						<AppBar
-							title="LTOE Login"
-						/>
 
 						<TextField
 							hintText="Enter your email"
 							floatingLabelText="Email"
 							onChange = {(event, newValue) => this.setState({username:newValue})}
 						/>
+
+						<br />
 
 						<TextField
 							type="password"
