@@ -4,16 +4,16 @@ import logo from '../logo.svg';
 import './styles/App.css';
 
 //Components
-import ExpenseList from "./ExpenseList";
-import Dashboard from "./Dashboard";
-import Income from "./Income";
-import Settings from "./Settings";
+import ExpenseList from "./Expenses/ExpenseList";
+import Dashboard from "./Dashboard/Dashboard";
+import Income from "./Income/Income";
+import Settings from "./Income/Settings";
 
-import Login from "./Login";
-import Register from "./Register";
+import Login from "./Authentication/Login";
+import Register from "./Authentication/Register";
 
-import Loginscreen from './LoginScreen';
-import Navbar from './Navbar';
+import Loginscreen from './AppComponents/LoginScreen';
+import Navbar from './AppComponents/Navbar';
 
 class App extends Component {
 
@@ -34,8 +34,9 @@ class App extends Component {
     let route_list;
 
     if (isLoggedIn) {
+
+      console.log(localStorage.getItem('user-token'));
       route_list = <div>
-        
             <Link to={'/expenses'}> Expenses </Link>
             <Link to={'/dashboard'}> Dashboard </Link>
             <Link to={'/income'}> Income </Link>
@@ -62,6 +63,8 @@ class App extends Component {
             <Route exact path="/settings" component={Settings}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
+
+            <route path="/expenses/addExpense" component={NewExpense}/>
           </Switch>
         </div>
 
