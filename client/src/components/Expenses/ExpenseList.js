@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import NewExpense from './NewExpense';
 
@@ -14,7 +15,7 @@ class ExpenseList extends Component {
 		return (
 			<div>
 				<h1>Expenses</h1>
-				<NewExpense />
+				<Link to={'/expenses/newExpense'}  > Add NewExpense </Link>
 			</div>
 		);
 	}

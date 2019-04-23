@@ -5,6 +5,9 @@ import './styles/App.css';
 
 //Components
 import ExpenseList from "./Expenses/ExpenseList";
+import NewExpense from "./Expenses/NewExpense";
+
+
 import Dashboard from "./Dashboard/Dashboard";
 import Income from "./Income/Income";
 import Settings from "./Settings/Settings";
@@ -64,6 +67,7 @@ class App extends Component {
             <Route exact path="/settings" component={Settings}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
+            <Route path="/expenses/newExpense" component={NewExpense}/>
           </Switch>
         </div>
 
