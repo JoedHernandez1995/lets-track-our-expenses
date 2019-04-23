@@ -7,12 +7,12 @@ import './styles/App.css';
 import ExpenseList from "./Expenses/ExpenseList";
 import Dashboard from "./Dashboard/Dashboard";
 import Income from "./Income/Income";
-import Settings from "./Income/Settings";
+import Settings from "./Settings/Settings";
 
 import Login from "./Authentication/Login";
 import Register from "./Authentication/Register";
 
-import Loginscreen from './AppComponents/LoginScreen';
+import Loginscreen from './Authentication/LoginScreen';
 import Navbar from './AppComponents/Navbar';
 
 class App extends Component {
@@ -41,6 +41,7 @@ class App extends Component {
             <Link to={'/dashboard'}> Dashboard </Link>
             <Link to={'/income'}> Income </Link>
             <Link to={'/settings'}> Settings </Link>
+            <Link to={'/login'} onClick={()=>localStorage.clear()} > Logout </Link>
       </div>
 
     } else {
@@ -63,8 +64,6 @@ class App extends Component {
             <Route exact path="/settings" component={Settings}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
-
-            <route path="/expenses/addExpense" component={NewExpense}/>
           </Switch>
         </div>
 

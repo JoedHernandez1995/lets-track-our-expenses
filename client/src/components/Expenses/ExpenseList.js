@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import NewExpense from './NewExpense';
+
 class ExpenseList extends Component {
 	constructor(){
 		super();
@@ -12,6 +14,7 @@ class ExpenseList extends Component {
 		return (
 			<div>
 				<h1>Expenses</h1>
+				<NewExpense />
 			</div>
 		);
 	}

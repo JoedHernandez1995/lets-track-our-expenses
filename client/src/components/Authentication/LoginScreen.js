@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import Login from './Login';
-import Register from './Register';
+import Login from '../Authentication/Login';
+import Register from '../Authentication/Register';
 
 class Loginscreen extends Component {
 	constructor(props){

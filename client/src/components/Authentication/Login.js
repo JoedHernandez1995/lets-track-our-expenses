@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from "axios";
 
-import ExpenseList from './ExpenseList';
+import ExpenseList from '../Expenses/ExpenseList';
 
 class Login extends Component {
 	constructor(props){
