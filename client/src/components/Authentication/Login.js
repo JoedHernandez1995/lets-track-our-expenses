@@ -26,7 +26,11 @@ class Login extends Component {
 		.then((response) => {
 			console.log(response);
 			if(response.status == 200){
-				localStorage.setItem("user-token", true);
+				var user_object = {
+					email: response.data.email,
+					UserId: response.data.UserId
+				}
+				localStorage.setItem("user", JSON.stringify(user_object));
 				console.log("Login successfull");
 				var uploadScreen = [];
 				uploadScreen.push(<ExpenseList appContex={self.props.appContex}/>)

@@ -7,7 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     note: DataTypes.TEXT,
     date: DataTypes.DATE,
-    cost: DataTypes.FLOAT
+    cost: DataTypes.FLOAT,
+    UserId: DataTypes.INTEGER,
   }, {});
   Expense.associate = function(models) {
     Expense.belongsTo(models.User);

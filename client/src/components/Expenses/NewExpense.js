@@ -20,6 +20,32 @@ class NewExpense extends Component {
 		
 	}
 
+	handleClick(event){
+		var apiURL = "http://localhost:5000/expenses/createNewExpense";
+		var self = this;
+	    var payload = {
+	    	"expenseType": this.state.expenseType,
+			"category": this.state.category,
+			"subcategory": this.state.subcategory,
+			"location": this.state.location,
+			"note": this.state.note,
+			"date": this.state.date,
+			"cost": parseFloat(this.state.cost),
+			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+	    }
+	    axios.post(apiURL, payload)
+	   	.then(function (response) {
+	    	console.log(response);
+	     	if(response.data.code == 200){
+	      		console.log("Expense added successfull");
+	    
+	     	}
+	   	})
+	   	.catch(function (error) {
+	     	console.log(error);
+	   	});
+	}
+
 	render() {
 		return (
 			<div>
@@ -55,7 +81,7 @@ class NewExpense extends Component {
 		           		<TextField
 		             		hintText="Enter Notes"
 		             		floatingLabelText="Notes"
-		             		onChange = {(event,newValue) => this.setState({notes:newValue})}
+		             		onChange = {(event,newValue) => this.setState({note:newValue})}
 		             	/>
 		             	<br/>
 		           		<TextField

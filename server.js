@@ -30,7 +30,11 @@ app.post('/authentication/loginUser', (req, res) => {
 		}
 	}).then((result) => {
 		if(result){
-			res.json(result);
+			const UserData = {
+				email: result.email,
+				UserId: result.id
+			}
+			res.json(UserData);
 		}
 	})
 });
@@ -45,6 +49,30 @@ app.post('/authentication/createNewUser', (req, res) => {
 		res.json(user);
 	})
 });
+
+app.post('/expenses/createNewExpense', (req, res) => {
+	models.Expense.create({
+		expenseType: req.body.expenseType,
+		category: req.body.category,
+		subcategory: req.body.subcategory,
+		location: req.body.location,
+		note: req.body.note,
+		date: req.body.date,
+		cost: req.body.cost,
+		UserId: req.body.UserId
+	}).then((expense) => {
+		res.json(expense);
+	})
+});
+
+app.get('/getAllExpenses', (req, res) => {
+	models.Expense.findAll()
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+
 
 
 

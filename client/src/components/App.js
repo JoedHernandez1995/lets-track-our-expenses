@@ -32,13 +32,13 @@ class App extends Component {
 
   render() {
 
-    const isLoggedIn = localStorage.getItem('user-token') ? true : false;
+    const isLoggedIn = localStorage.getItem('user') ? true : false;
 
     let route_list;
 
     if (isLoggedIn) {
 
-      console.log(localStorage.getItem('user-token'));
+      console.log(localStorage.getItem('user'));
       route_list = <div>
             <Link to={'/expenses'}> Expenses </Link>
             <Link to={'/dashboard'}> Dashboard </Link>
