@@ -15,7 +15,7 @@ class ExpenseList extends Component {
 		return (
 			<div>
 				<h1>Expenses</h1>
-				<Link to={'/expenses/newExpense'}  > Add NewExpense </Link>
+				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>
 			</div>
 		);
 	}
