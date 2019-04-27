@@ -73,8 +73,8 @@ class NewExpense extends Component {
 		             	/>
 		           		<br/>
 		           		<TextField
-		             		hintText="Enter Location"
-		             		floatingLabelText="Location"
+		             		hintText="Enter Label"
+		             		floatingLabelText="Label"
 		             		onChange = {(event,newValue) => this.setState({location:newValue})}
 		             	/>
 		           		<br/>
