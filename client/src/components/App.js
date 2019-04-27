@@ -12,7 +12,6 @@ import NewIncome from "./Income/NewIncome";
 
 
 import Dashboard from "./Dashboard/Dashboard";
-import Income from "./Income/Income";
 import Settings from "./Settings/Settings";
 
 import Login from "./Authentication/Login";
@@ -66,7 +65,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/expenses" component={ExpenseList}/>
             <Route exact path="/dashboard" component={Dashboard}/>
-            <Route exact path="/income" component={Income}/>
+            <Route exact path="/income" component={IncomeList}/>
             <Route exact path="/settings" component={Settings}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>

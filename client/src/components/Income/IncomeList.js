@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 class Income extends Component {
 	constructor(){
@@ -12,7 +13,7 @@ class Income extends Component {
 		return (
 			<div>
 				<h1>Income</h1>
-				<Link to={'/expenses/newExpense'}> Add NewIncome </Link>
+				<Link to={'/income/newIncome'}> Add NewIncome </Link>
 			</div>
 		);
 	}

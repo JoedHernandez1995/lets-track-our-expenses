@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-class Income extends Component {
+class NewIncome extends Component {
 	constructor(){
 		super();
 		this.state = {
@@ -22,4 +23,4 @@ const style = {
 	margin: 15,
 }
 
-export default Income;
+export default NewIncome;
