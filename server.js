@@ -65,13 +65,52 @@ app.post('/expenses/createNewExpense', (req, res) => {
 	})
 });
 
-app.get('/getAllExpenses', (req, res) => {
+app.get('/expenses/getAllExpenses', (req, res) => {
 	models.Expense.findAll()
 	.then((result) => {
 		res.json(result);
 	})
 });
 
+app.get('/expenses/getAllExpensesByUserId', (req, res) => {
+	models.Expense.findAll({
+		where: {
+			userId: req.body.UserId,
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+app.post('/incomes/createNewIncome', (req, res) => {
+	models.Income.create({
+		amount: req.body.amount,
+		date: req.body.date,
+		label: req.body.label,
+		UserId: req.body.UserId
+	}).then((expense) => {
+		res.json(expense);
+	})
+});
+
+app.get('/incomes/getAllIncomes', (req, res) => {
+	models.Income.findAll()
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+app.get('/incomes/getAllIncomesByUserId', (req, res) => {
+	models.Income.findAll({
+		where: {
+			userId: req.body.UserId,
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
 
 
 
