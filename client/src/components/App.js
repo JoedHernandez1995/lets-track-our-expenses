@@ -7,6 +7,9 @@ import './styles/App.css';
 import ExpenseList from "./Expenses/ExpenseList";
 import NewExpense from "./Expenses/NewExpense";
 
+import IncomeList from "./Income/IncomeList";
+import NewIncome from "./Income/NewIncome";
+
 
 import Dashboard from "./Dashboard/Dashboard";
 import Income from "./Income/Income";
@@ -68,6 +71,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route path="/expenses/newExpense" component={NewExpense}/>
+            <Route path="/income/newIncome" component={NewIncome} />
           </Switch>
         </div>
 

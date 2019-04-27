@@ -11,7 +11,8 @@ class Income extends Component {
 	render() {
 		return (
 			<div>
-				<h1>Income</h1>
+				<h1>New Income</h1>
+				<Link to={'/income'}> Back </Link>
 			</div>
 		);
 	}
