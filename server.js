@@ -72,10 +72,10 @@ app.get('/expenses/getAllExpenses', (req, res) => {
 	})
 });
 
-app.get('/expenses/getAllExpensesByUserId', (req, res) => {
+app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 	models.Expense.findAll({
 		where: {
-			userId: req.body.UserId,
+			UserId: req.body.UserId,
 		}
 	})
 	.then((result) => {
@@ -101,10 +101,11 @@ app.get('/incomes/getAllIncomes', (req, res) => {
 	})
 });
 
-app.get('/incomes/getAllIncomesByUserId', (req, res) => {
+app.post('/incomes/getAllIncomesByUserId', (req, res) => {
+	console.log(req);
 	models.Income.findAll({
 		where: {
-			userId: req.body.UserId,
+			UserId: req.body.UserId,
 		}
 	})
 	.then((result) => {

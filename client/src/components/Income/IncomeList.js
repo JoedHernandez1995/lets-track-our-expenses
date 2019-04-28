@@ -23,7 +23,7 @@ class Income extends Component {
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}
-		axios.get(apiURL, payload)
+		axios.post(apiURL, payload)
 	   	.then(function (response) {
 	   		console.log(response);
 	   		//c.setState({expenses: response.data});
