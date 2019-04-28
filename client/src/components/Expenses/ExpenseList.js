@@ -24,8 +24,11 @@ class ExpenseList extends Component {
 		var totalExpenses = 0;
 		var totalIncome = 0;
 		var c = this;
-		var apiURL = "http://localhost:5000/getAllExpenses";
-		axios.get(apiURL)
+		var apiURL = "http://localhost:5000/expenses/getAllExpensesByUserId";
+		var payload = {
+			UserId: JSON.parse(localStorage.getItem("user")).UserId
+		}
+		axios.get(apiURL, payload)
 	   	.then(function (response) {
 	   		console.log(response);
 	   		c.setState({expenses: response.data});

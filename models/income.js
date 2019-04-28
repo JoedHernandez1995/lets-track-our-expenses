@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER
   }, {});
   Income.associate = function(models) {
-  	Income.belongsTo(model.User);
+  	Income.belongsTo(models.User);
     // associations can be defined here
   };
   return Income;
