@@ -79,7 +79,15 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 		}
 	})
 	.then((result) => {
-		res.json(result);
+		var totalExpenses = 0;
+		result.forEach((entry) => {
+			totalExpenses += entry.dataValues.cost;
+		});
+		var expenseData = {
+			expenseList: result,
+			totalExpenses: totalExpenses
+		}
+		res.json(expenseData);
 	})
 });
 
@@ -109,7 +117,15 @@ app.post('/incomes/getAllIncomesByUserId', (req, res) => {
 		}
 	})
 	.then((result) => {
-		res.json(result);
+		var totalIncome = 0;
+		result.forEach((entry) => {
+			totalIncome += entry.dataValues.amount;
+		});
+		var incomeData = {
+			incomeList: result,
+			totalIncome: totalIncome
+		}
+		res.json(incomeData);
 	})
 });
 

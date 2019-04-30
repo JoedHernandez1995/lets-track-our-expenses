@@ -7,7 +7,9 @@ class Income extends Component {
 	constructor(){
 		super();
 		this.state = {
-			
+			incomeList: [],
+			totalIncome: [],
+
 		}
 	}
 
@@ -25,10 +27,8 @@ class Income extends Component {
 		}
 		axios.post(apiURL, payload)
 	   	.then(function (response) {
-	   		console.log(response);
-	   		//c.setState({expenses: response.data});
-	   		//response.data.map(expense => totalExpenses += expense.cost);
-	   		//c.setState({remainingIncome: totalIncome - totalExpenses});
+	   		c.setState({incomeList: response.data.incomeList});
+	   		c.setState({totalIncome: response.data.totalIncome});
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
@@ -39,6 +39,13 @@ class Income extends Component {
 		return (
 			<div>
 				<h1>Income</h1>
+				<br></br>
+				<h5>Total Income: {this.state.totalIncome} </h5>
+				<br></br>
+				{this.state.incomeList.map(income => {
+					return <li>{income.label} <a href="/">View</a> <a href="/">Delete</a></li>
+				})}
+				<br></br>
 				<Link to={'/income/newIncome'}> Add NewIncome </Link>
 			</div>
 		);
