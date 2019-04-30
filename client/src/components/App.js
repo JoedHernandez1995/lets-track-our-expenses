@@ -6,6 +6,7 @@ import './styles/App.css';
 //Components
 import ExpenseList from "./Expenses/ExpenseList";
 import NewExpense from "./Expenses/NewExpense";
+import ViewExpense from "./Expenses/ViewExpense";
 
 import IncomeList from "./Income/IncomeList";
 import NewIncome from "./Income/NewIncome";
@@ -70,6 +71,7 @@ class App extends Component {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route path="/expenses/newExpense" component={NewExpense}/>
+            <Route path="/expenses/viewExpense/" component={ViewExpense}/>
             <Route path="/income/newIncome" component={NewIncome} />
           </Switch>
         </div>

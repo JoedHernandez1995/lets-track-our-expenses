@@ -21,8 +21,6 @@ class ExpenseList extends Component {
 	}
 
 	getAllExpensesFromServer(){
-		var totalExpenses = 0;
-		var totalIncome = 0;
 		var c = this;
 		var apiURL = "http://localhost:5000/expenses/getAllExpensesByUserId";
 		var payload = {
@@ -46,7 +44,7 @@ class ExpenseList extends Component {
 				<h5>Total Expenses: {this.state.totalExpenses} </h5>
 				<br></br>
 				{this.state.expenses.map(expense => {
-					return <li>{expense.location} <a href="/">View</a> <a href="/">Delete</a></li>
+					return <li>{expense.location} <Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}>View</Link> <a href="/">Delete</a></li>
 				})}
 				<br></br>
 				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>

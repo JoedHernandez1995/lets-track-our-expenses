@@ -91,6 +91,18 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 	})
 });
 
+app.post('/expenses/getExpenseDataByIdAndUserId', (req, res) => {
+	models.Expense.findAll({
+		where: {
+			UserId: req.body.UserId,
+			id: req.body.id
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
+
 app.post('/incomes/createNewIncome', (req, res) => {
 	models.Income.create({
 		amount: req.body.amount,
