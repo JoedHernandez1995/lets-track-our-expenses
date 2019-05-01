@@ -36,6 +36,21 @@ class ExpenseList extends Component {
 	   	});
 	}
 
+	deleteExpense(expenseID,index){
+		var c = this;
+		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+		var payload = {
+			id: expenseID
+		}
+		axios.post(apiURL, payload)
+	   	.then(function (response) {
+	   		c.state.expenses.splice(index,1);
+	   	})
+	   	.catch(function (error) {
+	     	console.log(error);
+	   	});
+	}
+
 	render() {
 		return (
 			<div>
@@ -43,8 +58,12 @@ class ExpenseList extends Component {
 				<br></br>
 				<h5>Total Expenses: {this.state.totalExpenses} </h5>
 				<br></br>
-				{this.state.expenses.map(expense => {
-					return <li>{expense.location} <Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}>View</Link> <a href="/">Delete</a></li>
+				{this.state.expenses.map((expense,index) => {
+					return <li>
+								{expense.location} 
+								<Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}>View</Link> 
+								<a onClick={(event) => this.deleteExpense(expense.id,index)}>Delete</a>
+							</li>
 				})}
 				<br></br>
 				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>

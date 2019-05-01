@@ -50,6 +50,9 @@ app.post('/authentication/createNewUser', (req, res) => {
 	})
 });
 
+
+//Expenses
+
 app.post('/expenses/createNewExpense', (req, res) => {
 	models.Expense.create({
 		expenseType: req.body.expenseType,
@@ -95,6 +98,17 @@ app.post('/expenses/getExpenseDataByIdAndUserId', (req, res) => {
 	models.Expense.findAll({
 		where: {
 			UserId: req.body.UserId,
+			id: req.body.id
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+app.post('/expenses/deleteExpenseByExpenseId', (req, res) => {
+	models.Expense.destroy({
+		where: {
 			id: req.body.id
 		}
 	})
