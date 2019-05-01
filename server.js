@@ -155,6 +155,17 @@ app.post('/incomes/getAllIncomesByUserId', (req, res) => {
 	})
 });
 
+app.post('/expenses/deleteIncomeByIncomeId', (req, res) => {
+	models.Income.destroy({
+		where: {
+			id: req.body.id
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
+
 
 
 

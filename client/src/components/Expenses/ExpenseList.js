@@ -61,8 +61,8 @@ class ExpenseList extends Component {
 				{this.state.expenses.map((expense,index) => {
 					return <li>
 								{expense.location} 
-								<Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}>View</Link> 
-								<a onClick={(event) => this.deleteExpense(expense.id,index)}>Delete</a>
+								<Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}>View </Link> 
+								<a onClick={(event) => this.deleteExpense(expense.id,index)}> Delete</a>
 							</li>
 				})}
 				<br></br>

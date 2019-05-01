@@ -35,6 +35,21 @@ class Income extends Component {
 	   	});
 	}
 
+	deleteIncome(incomeID,index){
+		var c = this;
+		var apiURL = "http://localhost:5000/expenses/deleteIncomeByIncomeId";
+		var payload = {
+			id: incomeID
+		}
+		axios.post(apiURL, payload)
+	   	.then(function (response) {
+	   		c.state.expenses.splice(index,1);
+	   	})
+	   	.catch(function (error) {
+	     	console.log(error);
+	   	});
+	}
+
 	render() {
 		return (
 			<div>
@@ -42,8 +57,12 @@ class Income extends Component {
 				<br></br>
 				<h5>Total Income: {this.state.totalIncome} </h5>
 				<br></br>
-				{this.state.incomeList.map(income => {
-					return <li>{income.label} <a href="/">View</a> <a href="/">Delete</a></li>
+				{this.state.incomeList.map((income,index) => {
+					return <li>
+								{income.label} 
+								<a>View </a> 
+								<a onClick={(event) => this.deleteIncome(income.id,index)}> Delete</a>
+							</li>
 				})}
 				<br></br>
 				<Link to={'/income/newIncome'}> Add NewIncome </Link>
