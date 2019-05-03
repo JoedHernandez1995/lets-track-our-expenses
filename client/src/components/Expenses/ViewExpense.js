@@ -18,6 +18,10 @@ class ViewExpense extends Component {
 		}
 	}
 
+	handleClick(){
+		console.log("UPDATE!");
+	}
+
 	componentDidMount(){
 		this.setState({id: this.props.location.state.id});
 		this.getExpenseDataFromServer();
@@ -53,13 +57,51 @@ class ViewExpense extends Component {
 				<h1>View Expense</h1>
 
 				<h5>ID: {this.state.id}</h5>
-				<h5>Type: {this.state.expenseType}</h5>
-				<h5>Category: {this.state.category}</h5>
-				<h5>SubCategory: {this.state.subcategory}</h5>
-				<h5>Label: {this.state.label}</h5>
-				<h5>Note: {this.state.note}</h5>
-				<h5>Date: {this.state.date}</h5>
-				<h5>Cost: {this.state.cost}</h5>
+
+				<TextField
+					hintText="Enter Expense Type"
+					floatingLabelText={this.state.expenseType}
+					onChange = {(event, newValue) => this.setState({expenseType:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter Category"
+					floatingLabelText={this.state.category}
+					onChange = {(event, newValue) => this.setState({category:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter SubCategory"
+					floatingLabelText={this.state.subcategory}
+					onChange = {(event, newValue) => this.setState({subcategory:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter Label"
+					floatingLabelText={this.state.label}
+					onChange = {(event, newValue) => this.setState({label:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter Note"
+					floatingLabelText={this.state.note}
+					onChange = {(event, newValue) => this.setState({note:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter Date"
+					floatingLabelText={this.state.date}
+					onChange = {(event, newValue) => this.setState({date:newValue})}
+				/>
+
+				<TextField
+					hintText="Enter Cost"
+					floatingLabelText={this.state.cost}
+					onChange = {(event, newValue) => this.setState({cost:newValue})}
+				/>
+
+				<br/>
+		    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
 				<Link to={'/expenses'}> Back </Link>
 			</div>
