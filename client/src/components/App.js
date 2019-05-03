@@ -20,6 +20,7 @@ import Register from "./Authentication/Register";
 
 import Loginscreen from './Authentication/LoginScreen';
 import Navbar from './AppComponents/Navbar';
+import Sidebar from './AppComponents/Sidebar';
 
 class App extends Component {
 
@@ -60,7 +61,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-
+          <Sidebar />
           {route_list}
 
           <Switch>
