@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 
 class ViewExpense extends Component {
@@ -19,7 +22,30 @@ class ViewExpense extends Component {
 	}
 
 	handleClick(){
-		console.log("UPDATE!");
+		var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
+		var self = this;
+	    var payload = {
+	    	"expenseType": this.state.expenseType,
+			"category": this.state.category,
+			"subcategory": this.state.subcategory,
+			"location": this.state.location,
+			"note": this.state.note,
+			"date": this.state.date,
+			"cost": parseFloat(this.state.cost),
+			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+			"id": this.props.location.state.id
+	    }
+	    axios.post(apiURL, payload)
+	   	.then(function (response) {
+	    	console.log(response);
+	     	if(response.data.code == 200){
+	      		console.log("Expense updated successfull");
+	    
+	     	}
+	   	})
+	   	.catch(function (error) {
+	     	console.log(error);
+	   	});
 	}
 
 	componentDidMount(){
@@ -54,55 +80,63 @@ class ViewExpense extends Component {
 	render() {
 		return (
 			<div>
-				<h1>View Expense</h1>
+				<MuiThemeProvider>
+					<h1>View Expense</h1>
 
-				<h5>ID: {this.state.id}</h5>
+					<h5>ID: {this.state.id}</h5>
 
-				<TextField
-					hintText="Enter Expense Type"
-					floatingLabelText={this.state.expenseType}
-					onChange = {(event, newValue) => this.setState({expenseType:newValue})}
-				/>
+					<TextField
+						hintText="Enter Expense Type"
+						value={this.state.expenseType}
+						floatingLabelText="Expense Type"
+						onChange = {(event, newValue) => this.setState({expenseType:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter Category"
+						value={this.state.category}
+						floatingLabelText="Category"
+						onChange = {(event, newValue) => this.setState({category:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter SubCategory"
+						value={this.state.subcategory}
+						floatingLabelText="Sub Category"
+						onChange = {(event, newValue) => this.setState({subcategory:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter Label"
+						value={this.state.location}
+						floatingLabelText="Label"
+						onChange = {(event, newValue) => this.setState({location:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter Note"
+						value={this.state.note}
+						floatingLabelText="Notes"
+						onChange = {(event, newValue) => this.setState({note:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter Date"
+						value={this.state.date}
+						floatingLabelText="Date"
+						onChange = {(event, newValue) => this.setState({date:newValue})}
+					/>
+					<br/>
+					<TextField
+						hintText="Enter Cost"
+						value={this.state.cost}
+						floatingLabelText="Cost"
+						onChange = {(event, newValue) => this.setState({cost:newValue})}
+					/>
+					<br/>
+			    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
-				<TextField
-					hintText="Enter Category"
-					floatingLabelText={this.state.category}
-					onChange = {(event, newValue) => this.setState({category:newValue})}
-				/>
-
-				<TextField
-					hintText="Enter SubCategory"
-					floatingLabelText={this.state.subcategory}
-					onChange = {(event, newValue) => this.setState({subcategory:newValue})}
-				/>
-
-				<TextField
-					hintText="Enter Label"
-					floatingLabelText={this.state.label}
-					onChange = {(event, newValue) => this.setState({label:newValue})}
-				/>
-
-				<TextField
-					hintText="Enter Note"
-					floatingLabelText={this.state.note}
-					onChange = {(event, newValue) => this.setState({note:newValue})}
-				/>
-
-				<TextField
-					hintText="Enter Date"
-					floatingLabelText={this.state.date}
-					onChange = {(event, newValue) => this.setState({date:newValue})}
-				/>
-
-				<TextField
-					hintText="Enter Cost"
-					floatingLabelText={this.state.cost}
-					onChange = {(event, newValue) => this.setState({cost:newValue})}
-				/>
-
-				<br/>
-		    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-
+			    </MuiThemeProvider>
 				<Link to={'/expenses'}> Back </Link>
 			</div>
 		);

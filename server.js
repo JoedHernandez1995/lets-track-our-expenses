@@ -117,6 +117,31 @@ app.post('/expenses/deleteExpenseByExpenseId', (req, res) => {
 	})
 });
 
+
+app.post('/expenses/updateExpenseByExpenseId', (req, res) => {
+	models.Expense.update(
+		{
+			expenseType: req.body.expenseType,
+			category: req.body.category,
+			subcategory: req.body.subcategory,
+			location: req.body.location,
+			note: req.body.note,
+			date: req.body.date,
+			cost: req.body.cost
+		},
+		{
+			where: {
+				id: req.body.id,
+				UserId: req.body.UserId
+			}
+		}
+	)
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+
 app.post('/incomes/createNewIncome', (req, res) => {
 	models.Income.create({
 		amount: req.body.amount,
