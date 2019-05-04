@@ -14,6 +14,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -54,21 +60,15 @@ function PermanentDrawerLeft(props) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+            <ListItemLink href="/expenses">
+              <ListItemText primary="Expenses" />
+            </ListItemLink>
+            <ListItemLink href="/dashboard">
+              <ListItemText primary="Dashboard" />
+            </ListItemLink>
+            <ListItemLink href="/income">
+              <ListItemText primary="Income" />
+            </ListItemLink>
         </List>
       </Drawer>
   );
