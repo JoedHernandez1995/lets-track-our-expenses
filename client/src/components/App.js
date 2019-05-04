@@ -44,10 +44,6 @@ class App extends Component {
 
       console.log(localStorage.getItem('user'));
       route_list = <div>
-            <Link to={'/expenses'}> Expenses </Link>
-            <Link to={'/dashboard'}> Dashboard </Link>
-            <Link to={'/income'}> Income </Link>
-            <Link to={'/settings'}> Settings </Link>
             <Link to={'/login'} onClick={()=>localStorage.clear()} > Logout </Link>
       </div>
 

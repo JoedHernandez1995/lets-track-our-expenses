@@ -16,10 +16,6 @@ import MailIcon from '@material-ui/icons/Mail';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
-
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -60,15 +56,15 @@ function PermanentDrawerLeft(props) {
         <div className={classes.toolbar} />
         <Divider />
         <List>
-            <ListItemLink href="/expenses">
-              <ListItemText primary="Expenses" />
-            </ListItemLink>
-            <ListItemLink href="/dashboard">
-              <ListItemText primary="Dashboard" />
-            </ListItemLink>
-            <ListItemLink href="/income">
-              <ListItemText primary="Income" />
-            </ListItemLink>
+          <ListItem button component={Link} to="/expenses">
+            <ListItemText primary="Expenses" />
+          </ListItem>
+          <ListItem button component={Link} to="/dashboard">
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          <ListItem button component={Link} to="/income">
+            <ListItemText primary="Income" />
+          </ListItem>
         </List>
       </Drawer>
   );
