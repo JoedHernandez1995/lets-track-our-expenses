@@ -38,28 +38,27 @@ class App extends Component {
 
     const isLoggedIn = localStorage.getItem('user') ? true : false;
 
-    let route_list;
+    let display;
 
     if (isLoggedIn) {
 
-      console.log(localStorage.getItem('user'));
-      route_list = <div>
-            <Link to={'/login'} onClick={()=>localStorage.clear()} > Logout </Link>
+      display = <div>
+        <Navbar online={isLoggedIn}/>
+        <Sidebar />
       </div>
 
+
     } else {
-      route_list = <div> 
-            <Link to={'/login'}> Login </Link>
-            <Link to={'/register'}> Register </Link>
+
+      display = <div>
+        <Navbar online={isLoggedIn}/>
       </div>
+
     }
     return (
       <Router>
         <div className="App">
-          <Navbar />
-          <Sidebar />
-          {route_list}
-
+          {display}
           <Switch>
             <Route exact path="/expenses" component={ExpenseList}/>
             <Route exact path="/dashboard" component={Dashboard}/>
