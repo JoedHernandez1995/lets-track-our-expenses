@@ -19,8 +19,17 @@
   color: white;
 }
 
-.topNavbar{
+.titleWhileOnline{
+  flex: 1;
+  text-align: right;
+}
+
+.topNavbarWithMargin{
   margin-left: 240px;
+}
+
+.topNavbar{
+  margin-left: 0px;
 }
 
 .App-link {

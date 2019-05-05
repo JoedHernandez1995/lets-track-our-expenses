@@ -4,6 +4,7 @@ import logo from '../logo.svg';
 import './styles/App.css';
 
 //Components
+import Index from "./Index";
 import ExpenseList from "./Expenses/ExpenseList";
 import NewExpense from "./Expenses/NewExpense";
 import ViewExpense from "./Expenses/ViewExpense";
@@ -59,7 +60,9 @@ class App extends Component {
       <Router>
         <div className="App">
           {display}
+
           <Switch>
+            <Route exact path="/" component={Index}/>
             <Route exact path="/expenses" component={ExpenseList}/>
             <Route exact path="/dashboard" component={Dashboard}/>
             <Route exact path="/income" component={IncomeList}/>
@@ -71,9 +74,6 @@ class App extends Component {
             <Route path="/income/newIncome" component={NewIncome} />
           </Switch>
         </div>
-
-        
-
       </Router>
       
     );
