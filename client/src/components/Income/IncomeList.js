@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import axios from 'axios';
 
+import '../styles/App.css';
+
 class Income extends Component {
 	constructor(){
 		super();

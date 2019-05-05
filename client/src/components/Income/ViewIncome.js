@@ -5,6 +5,8 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 
+import '../styles/App.css';
+
 class ViewIncome extends Component {
 
 	constructor(){
@@ -15,6 +17,10 @@ class ViewIncome extends Component {
 			label: 0.0,
 			date: '',
 		}
+	}
+
+	componentDidMount(){
+		
 	}
 
 	handleClick(){

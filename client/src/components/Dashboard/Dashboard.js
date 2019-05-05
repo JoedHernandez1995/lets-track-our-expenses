@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import '../styles/App.css';
+
 class Dashboard extends Component {
 	constructor(){
 		super();

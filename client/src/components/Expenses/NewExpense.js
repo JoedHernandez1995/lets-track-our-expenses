@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 
+import '../styles/App.css';
+
 class NewExpense extends Component {
 	constructor(props){
 		super(props);
@@ -17,6 +19,10 @@ class NewExpense extends Component {
 			date:'',
 			cost:''
 		}
+		
+	}
+
+	componentDidMount(){
 		
 	}
 
@@ -48,7 +54,7 @@ class NewExpense extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={'safeAreaMargin'}>
 				<h1>New Expense</h1>
 
 				<MuiThemeProvider>

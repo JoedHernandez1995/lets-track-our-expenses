@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 
+import '../styles/App.css';
+
 class NewIncome extends Component {
 	constructor(){
 		super();
@@ -13,6 +15,10 @@ class NewIncome extends Component {
 			date: '',
 			label: ''
 		}
+	}
+
+	componentDidMount(){
+		
 	}
 
 	handleClick(event){

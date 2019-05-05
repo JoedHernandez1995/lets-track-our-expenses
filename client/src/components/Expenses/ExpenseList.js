@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
 import NewExpense from './NewExpense';
-
 import axios from 'axios';
+
+import '../styles/App.css';
 
 class ExpenseList extends Component {
 
@@ -53,7 +53,7 @@ class ExpenseList extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={'safeAreaMargin'}>
 				<h1>Expenses</h1>
 				<br></br>
 				<h5>Total Expenses: {this.state.totalExpenses} </h5>
