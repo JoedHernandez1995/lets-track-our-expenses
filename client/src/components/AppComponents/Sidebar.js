@@ -56,14 +56,17 @@ function PermanentDrawerLeft(props) {
       >
         <div className={classes.toolbar} />
         <List>
-          <ListItem button component={Link} to="/expenses">
+          <ListItem className={"appLink"} button component={Link} to="/expenses">
             <ListItemText primary="Expenses" />
           </ListItem>
-          <ListItem button component={Link} to="/dashboard">
+          <ListItem className={"appLink"} button component={Link} to="/dashboard">
             <ListItemText primary="Dashboard" />
           </ListItem>
-          <ListItem button component={Link} to="/income">
-            <ListItemText primary="Income" />
+          <ListItem className={"appLink"} button component={Link} to="/income">
+            <ListItemText primary="Income" /> 
+          </ListItem>
+          <ListItem className={"appLink"} button component={Link} to="/" onClick={()=>localStorage.clear()}> 
+            <ListItemText primary="Logout" /> 
           </ListItem>
         </List>
       </Drawer>

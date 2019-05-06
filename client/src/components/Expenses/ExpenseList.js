@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NewExpense from './NewExpense';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 
 import '../styles/App.css';
@@ -55,7 +60,65 @@ class ExpenseList extends Component {
 	render() {
 		return (
 			<div className={'safeAreaMargin'}>
-				<h1>Expenses</h1>
+				<h1 style={{color: '#FFFFFF'}}>Expenses</h1>
+
+				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>
+					<Grid container spacing={8}>
+						<Grid item xs={3}>
+							<Card>
+								<CardContent>
+									<Typography>
+										Remaining Budget: 
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+						<Grid item xs={3}>
+							<Card>
+								<CardContent>
+									<Typography>
+										Remaining Budget: 
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+						<Grid item xs={3}>
+							<Card>
+								<CardContent>
+									<Typography>
+										Remaining Budget: 
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+						<Grid item xs={3}>
+							<Card>
+								<CardContent>
+									<Typography>
+										Remaining Budget: 
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+						<Grid item xs={6}>
+						</Grid>
+					</Grid>
+				</div>
+
+				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>
+					<Grid container spacing={8}>
+						<Grid item xs={12}>
+							<Card>
+								<CardContent>
+									<Typography>
+										Remaining Budget: 
+									</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+					</Grid>
+				</div>
+				
 				<br></br>
 				<h5>Total Expenses: {this.state.totalExpenses} </h5>
 				<br></br>

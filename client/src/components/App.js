@@ -43,7 +43,6 @@ class App extends Component {
     if (isLoggedIn) {
 
       display = <div>
-        <Navbar online={isLoggedIn}/>
         <Sidebar />
       </div>
 
@@ -51,7 +50,7 @@ class App extends Component {
     } else {
 
       display = <div>
-        <Navbar online={isLoggedIn}/>
+        <Navbar/>
       </div>
 
     }
@@ -59,7 +58,6 @@ class App extends Component {
       <Router>
         <div className="App">
           {display}
-
           <Switch>
             <Route exact path="/" component={Index}/>
             <Route exact path="/expenses" component={ExpenseList}/>
