@@ -193,7 +193,7 @@ app.post('/incomes/getIncomeDataByIdAndUserId', (req, res) => {
 });
 
 
-app.post('/expenses/updateIncomeByIncomeId', (req, res) => {
+app.post('/incomes/updateIncomeByIncomeId', (req, res) => {
 	models.Income.update(
 		{
 			amount: req.body.amount,

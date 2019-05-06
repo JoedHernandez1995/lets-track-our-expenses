@@ -11,7 +11,7 @@ import ViewExpense from "./Expenses/ViewExpense";
 
 import IncomeList from "./Income/IncomeList";
 import NewIncome from "./Income/NewIncome";
-
+import ViewIncome from "./Income/ViewIncome";
 
 import Dashboard from "./Dashboard/Dashboard";
 import Settings from "./Settings/Settings";
@@ -33,7 +33,6 @@ class App extends Component {
   componentWillMount(){
 
   }
-
 
   render() {
 
@@ -72,6 +71,7 @@ class App extends Component {
             <Route path="/expenses/newExpense" component={NewExpense}/>
             <Route path="/expenses/viewExpense/" component={ViewExpense}/>
             <Route path="/income/newIncome" component={NewIncome} />
+            <Route path="/income/viewIncome" component={ViewIncome} />
           </Switch>
         </div>
       </Router>

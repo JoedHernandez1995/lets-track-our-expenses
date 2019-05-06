@@ -61,9 +61,9 @@ class Income extends Component {
 				<br></br>
 				{this.state.incomeList.map((income,index) => {
 					return <li>
-								{income.label} 
-								<a>View </a> 
-								<a onClick={(event) => this.deleteIncome(income.id,index)}> Delete</a>
+								{income.label}
+								<Link to={{ pathname: '/income/viewIncome', state: {id: income.id}}}> View </Link>  
+								<a onClick={(event) => this.deleteIncome(income.id,index)}> Delete </a>
 							</li>
 				})}
 				<br></br>

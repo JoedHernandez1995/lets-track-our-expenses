@@ -19,16 +19,13 @@ class ViewIncome extends Component {
 		}
 	}
 
-	componentDidMount(){
-
-	}
-
 	handleClick(){
 		var apiURL = "http://localhost:5000/incomes/updateIncomeByIncomeId";
 		var self = this;
 	    var payload = {
 	    	"amount": this.state.amount,
 			"label": this.state.label,
+			"date": this.state.date,
 			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
 			"id": this.props.location.state.id
 	    }
@@ -47,7 +44,7 @@ class ViewIncome extends Component {
 
 	componentDidMount(){
 		this.setState({id: this.props.location.state.id});
-		this.getExpenseDataFromServer();
+		this.getIncomeDataFromServer();
 	}
 
 	getIncomeDataFromServer(){
@@ -102,7 +99,7 @@ class ViewIncome extends Component {
 			    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
 			    </MuiThemeProvider>
-				<Link to={'/incomes'}> Back </Link>
+				<Link to={'/income'}> Back </Link>
 			</div>
 		);
 	}
