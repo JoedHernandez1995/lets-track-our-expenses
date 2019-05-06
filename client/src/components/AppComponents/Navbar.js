@@ -11,23 +11,23 @@ const NavBar = (props) => {
 
 	var appBarClassName = props.online ? "topNavbarWithMargin" : "topNavbar";
 
-	var titleClassName = props.online ? "titleWhileOnline" : " ";
+	var titleClassName = props.online ? "titleWhileOnline" : "titleNormal";
 
 	let appbar;
 	if (props.online){
 		appbar = 	<div style={{ flex: 1}}>
             			<Button color="inherit" >
-            				<Link to={'/'} onClick={()=>localStorage.clear()}> Logout </Link>
+            				<Link className={"appLink"} to={'/'} onClick={()=>localStorage.clear()}> Logout </Link>
             			</Button>
             		</div>
             			
 	}else{
 		appbar = 	<div style={{ flex: 1, textAlign: 'right'}}>
             			<Button color="inherit">
-            				<Link to={'/login'}> Login </Link>
+            				<Link className={"appLink"} to={'/login'}> Login </Link>
             			</Button>
             			<Button color="inherit">
-            				<Link to={'/register'}> Register </Link>
+            				<Link className={"appLink"} to={'/register'}> Register </Link>
             			</Button>
             		</div>
             			
@@ -35,8 +35,8 @@ const NavBar = (props) => {
     return(
         <div>
         	<AppBar className={appBarClassName} position="static" style={{ display: 'flex'}}>
-            	<Toolbar style={{backgroundColor: '#AB0043'}}>
-            		<Typography className={titleClassName} variant="h6" color="inherit">
+            	<Toolbar style={{backgroundColor: '#FFFFFF'}}>
+            		<Typography className={titleClassName} variant="h6">
 						Let's Track Our Expenses
 					</Typography>
 					{appbar}

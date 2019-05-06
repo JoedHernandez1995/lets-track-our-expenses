@@ -55,7 +55,6 @@ function PermanentDrawerLeft(props) {
         anchor="left"
       >
         <div className={classes.toolbar} />
-        <Divider />
         <List>
           <ListItem button component={Link} to="/expenses">
             <ListItemText primary="Expenses" />
