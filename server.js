@@ -117,7 +117,6 @@ app.post('/expenses/deleteExpenseByExpenseId', (req, res) => {
 	})
 });
 
-
 app.post('/expenses/updateExpenseByExpenseId', (req, res) => {
 	models.Expense.update(
 		{
@@ -177,6 +176,39 @@ app.post('/incomes/getAllIncomesByUserId', (req, res) => {
 			totalIncome: totalIncome
 		}
 		res.json(incomeData);
+	})
+});
+
+
+app.post('/incomes/getIncomeDataByIdAndUserId', (req, res) => {
+	models.Income.findAll({
+		where: {
+			UserId: req.body.UserId,
+			id: req.body.id
+		}
+	})
+	.then((result) => {
+		res.json(result);
+	})
+});
+
+
+app.post('/expenses/updateIncomeByIncomeId', (req, res) => {
+	models.Income.update(
+		{
+			amount: req.body.amount,
+			date: req.body.date,
+			label: req.body.label,
+		},
+		{
+			where: {
+				id: req.body.id,
+				UserId: req.body.UserId
+			}
+		}
+	)
+	.then((result) => {
+		res.json(result);
 	})
 });
 

@@ -18,7 +18,7 @@ class NewIncome extends Component {
 	}
 
 	componentDidMount(){
-		
+
 	}
 
 	handleClick(event){
@@ -45,7 +45,7 @@ class NewIncome extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={'safeAreaMargin'}>
 				<h1>New Income</h1>
 
 				<MuiThemeProvider>

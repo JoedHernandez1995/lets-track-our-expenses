@@ -54,7 +54,7 @@ class Income extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={'safeAreaMargin'}>
 				<h1>Income</h1>
 				<br></br>
 				<h5>Total Income: {this.state.totalIncome} </h5>
