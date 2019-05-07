@@ -47,22 +47,6 @@ const columns = [
   		}	
  	},
  	{
-  		name: "subcategory",
-  		label: "Sub Category",
-  		options: {
-   			filter: false,
-   			sort: false,
-  		}	
- 	},
- 	{
-  		name: "note",
-  		label: "Note",
-  		options: {
-   			filter: false,
-   			sort: false,
-  		}	
- 	},
- 	{
   		name: "date",
   		label: "Date",
   		options: {

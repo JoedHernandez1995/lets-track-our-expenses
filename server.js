@@ -7,6 +7,16 @@ const app = express();
 const path = require('path');
 const port = process.env.PORT || 5000;
 
+
+function GetFormattedDate(input){
+	var date = new Date(input);
+	var d = date.getDate();
+	var m = date.getMonth();
+	m += 1;
+	var y = date.getFullYear();
+	return m + "/" + d + "/" + y; 
+}
+
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -83,7 +93,9 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 	})
 	.then((result) => {
 		var totalExpenses = 0;
+
 		result.forEach((entry) => {
+			entry.dataValues.date = GetFormattedDate(entry.dataValues.date);
 			totalExpenses += entry.dataValues.cost;
 		});
 		var expenseData = {
