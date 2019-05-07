@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import { ToastContainer, toast } from 'react-toastify';
 
 import MUIDataTable from "mui-datatables";
 
@@ -64,7 +65,6 @@ class ExpenseList extends Component {
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
-			console.log(expenseObject);
 			var payload = {
 				id: expenseObject.id
 			}
@@ -73,7 +73,8 @@ class ExpenseList extends Component {
 
 		axios.all(promises)
 		.then(function(response){
-			console.log("All items have been deleted!");
+			toast("Expenses have been deleted!");
+			
 		})
 		.catch(function (error){
 			console.log(error)
@@ -186,18 +187,6 @@ class ExpenseList extends Component {
 						</Grid>
 					</Grid>
 				</div>
-				
-				<br></br>
-				<h5>Total Expenses: {this.state.totalExpenses} </h5>
-				<br></br>
-				{this.state.expenses.map((expense,index) => {
-					return <li>
-								{expense.location} 
-								<Link to={{ pathname: '/expenses/viewExpense', state: {id: expense.id}}}> View </Link> 
-								<a onClick={(event) => this.deleteExpense(expense.id,index)}> Delete</a>
-							</li>
-				})}
-				<br></br>
 				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>
 			</div>
 		);

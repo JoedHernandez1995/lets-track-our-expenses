@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import { ToastContainer, toast } from 'react-toastify';
+
 import axios from 'axios';
 
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/App.css';
 
 class ViewExpense extends Component {
@@ -44,9 +47,12 @@ class ViewExpense extends Component {
 	    axios.post(apiURL, payload)
 	   	.then(function (response) {
 	    	console.log(response);
-	     	if(response.data.code == 200){
+	     	if(response.status == 200){
+	     		toast.success("Expense has been updated!", {
+			        position: toast.POSITION.TOP_RIGHT
+			    });
 	      		console.log("Expense updated successfull");
-	    
+	    		
 	     	}
 	   	})
 	   	.catch(function (error) {
@@ -143,6 +149,7 @@ class ViewExpense extends Component {
 			    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 
 			    </MuiThemeProvider>
+			    <ToastContainer autoClose={4000} />
 				<Link to={'/expenses'}> Back </Link>
 			</div>
 		);
