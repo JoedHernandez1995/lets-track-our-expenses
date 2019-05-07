@@ -12,55 +12,6 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import '../styles/App.css';
 
-
-const columns = [
-	{
-  		name: "location",
-  		label: "Label",
-  		options: {
-   			filter: false,
-   			sort: true,
-  		}	
- 	},
- 	{
-  		name: "cost",
-  		label: "Cost",
-  		options: {
-   			filter: false,
-   			sort: true,
-  		}	
- 	},
- 	{
-  		name: "expenseType",
-  		label: "Expense Type",
-  		options: {
-   			filter: true,
-   			sort: false,
-  		}	
- 	},
- 	{
-  		name: "category",
-  		label: "Category",
-  		options: {
-   			filter: true,
-   			sort: false,
-  		}	
- 	},
- 	{
-  		name: "date",
-  		label: "Date",
-  		options: {
-   			filter: false,
-   			sort: true,
-  		}	
- 	},
- 
-];
-
-const options = {
-  filterType: 'dropdown'
-};
-
 class ExpenseList extends Component {
 
 	constructor(){
@@ -91,8 +42,20 @@ class ExpenseList extends Component {
 	   	});
 	}
 
-	deleteExpense(expenseID,index){
-		var c = this;
+	clickRow(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
+		console.log(rowData);
+		console.log(rowMeta);
+	}
+
+	deleteExpense(rowsDeleted: array){
+		console.log(rowsDeleted);
+
+		for(var i = 0; i < rowsDeleted.data.length; i++){
+			var dataIndex = rowsDeleted.data[i].dataIndex;
+			var expenseObject = this.state.expenses[dataIndex];
+			console.log(expenseObject);
+		}
+		/*var c = this;
 		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
 		var payload = {
 			id: expenseID
@@ -103,10 +66,64 @@ class ExpenseList extends Component {
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
-	   	});
+	   	});*/
 	}
 
 	render() {
+
+		const columns = [
+			{
+		  		name: "location",
+		  		label: "Label",
+		  		options: {
+		   			filter: false,
+		   			sort: true,
+		  		}	
+		 	},
+		 	{
+		  		name: "cost",
+		  		label: "Cost",
+		  		options: {
+		   			filter: false,
+		   			sort: true,
+		  		}	
+		 	},
+		 	{
+		  		name: "expenseType",
+		  		label: "Expense Type",
+		  		options: {
+		   			filter: true,
+		   			sort: false,
+		  		}	
+		 	},
+		 	{
+		  		name: "category",
+		  		label: "Category",
+		  		options: {
+		   			filter: true,
+		   			sort: false,
+		  		}	
+		 	},
+		 	{
+		  		name: "date",
+		  		label: "Date",
+		  		options: {
+		   			filter: false,
+		   			sort: true,
+		  		}	
+		 	},
+		 
+		];
+
+		const options = {
+		  filterType: 'dropdown',
+		  print: false,
+		  downloadOptions: {
+		  	filename: 'expense-list.csv', 
+		  },
+		  onRowClick: this.clickRow,
+		  onRowsDelete: this.deleteExpense
+		};
 
 		return (
 			<div className={'safeAreaMargin'}>
@@ -148,16 +165,12 @@ class ExpenseList extends Component {
 				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>
 					<Grid container spacing={8}>
 						<Grid item xs={12}>
-							<Card>
-								<CardContent>
-									<MUIDataTable
-									  title={"Expense List"}
-									  data={this.state.expenses}
-									  columns={columns}
-									  options={options}
-									/>
-								</CardContent>
-							</Card>
+							<MUIDataTable
+								title={"Expense List"}
+								data={this.state.expenses}
+								columns={columns}
+								options={options}
+							/>	
 						</Grid>
 					</Grid>
 				</div>
