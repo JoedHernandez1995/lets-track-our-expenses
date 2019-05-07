@@ -42,16 +42,25 @@ class ExpenseList extends Component {
 	   	});
 	}
 
-	clickRow(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
-		console.log(rowData);
-		console.log(rowMeta);
+	viewExpense(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
+		var c = this.componentInstance;
+		var currentExpenseIndex = rowMeta.dataIndex;
+		var expenseID = c.state.expenses[currentExpenseIndex].id;
+		c.props.history.push({
+			pathname: '/expenses/viewExpense',
+			state: {
+				id: expenseID
+			}
+		});
+		
 	}
 
 	deleteExpense(rowsDeleted: array){
+		var c = this.componentInstance; 
 		var promises = [];
-		var c = this.componentInstance;
 		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
-	
+
+		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
@@ -84,7 +93,7 @@ class ExpenseList extends Component {
 		 	},
 		 	{
 		  		name: "cost",
-		  		label: "Cost",
+		  		label: "Cost (L)",
 		  		options: {
 		   			filter: false,
 		   			sort: true,
@@ -124,7 +133,7 @@ class ExpenseList extends Component {
 		  	downloadOptions: {
 		  		filename: 'expense-list.csv', 
 		  	},
-		  	onRowClick: this.clickRow,
+		  	onRowClick: this.viewExpense,
 		  	onRowsDelete: this.deleteExpense
 		};
 

@@ -73,7 +73,7 @@ class ViewExpense extends Component {
 	   		c.setState({expenseType: response.data[0].expenseType});
 	   		c.setState({category: response.data[0].category});
 	   		c.setState({subcategory: response.data[0].subcategory});
-	   		c.setState({label: response.data[0].location});
+	   		c.setState({location: response.data[0].location});
 	   		c.setState({note: response.data[0].note});
 	   		c.setState({date: response.data[0].date});
 	   		c.setState({cost: response.data[0].cost});
