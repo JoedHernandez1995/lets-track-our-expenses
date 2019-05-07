@@ -48,25 +48,27 @@ class ExpenseList extends Component {
 	}
 
 	deleteExpense(rowsDeleted: array){
-		console.log(rowsDeleted);
-
+		var promises = [];
+		var c = this.componentInstance;
+		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+	
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
-			var expenseObject = this.state.expenses[dataIndex];
+			var expenseObject = c.state.expenses[dataIndex];
 			console.log(expenseObject);
+			var payload = {
+				id: expenseObject.id
+			}
+			promises.push(axios.post(apiURL, payload));
 		}
-		/*var c = this;
-		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
-		var payload = {
-			id: expenseID
-		}
-		axios.post(apiURL, payload)
-	   	.then(function (response) {
-	   		c.state.expenses.splice(index,1);
-	   	})
-	   	.catch(function (error) {
-	     	console.log(error);
-	   	});*/
+
+		axios.all(promises)
+		.then(function(response){
+			console.log("All items have been deleted!");
+		})
+		.catch(function (error){
+			console.log(error)
+		});
 	}
 
 	render() {
@@ -116,13 +118,14 @@ class ExpenseList extends Component {
 		];
 
 		const options = {
-		  filterType: 'dropdown',
-		  print: false,
-		  downloadOptions: {
-		  	filename: 'expense-list.csv', 
-		  },
-		  onRowClick: this.clickRow,
-		  onRowsDelete: this.deleteExpense
+			componentInstance: this,
+		  	filterType: 'dropdown',
+		  	print: false,
+		  	downloadOptions: {
+		  		filename: 'expense-list.csv', 
+		  	},
+		  	onRowClick: this.clickRow,
+		  	onRowsDelete: this.deleteExpense
 		};
 
 		return (
