@@ -125,7 +125,7 @@ app.post('/expenses/deleteExpenseByExpenseId', (req, res) => {
 		}
 	})
 	.then((result) => {
-		res.json(result);
+		res.json({deletedIndex: req.body.index});
 	})
 });
 

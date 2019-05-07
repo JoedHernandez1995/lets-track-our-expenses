@@ -66,18 +66,32 @@ class ExpenseList extends Component {
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
 			var payload = {
-				id: expenseObject.id
+				id: expenseObject.id,
+				index: dataIndex
 			}
 			promises.push(axios.post(apiURL, payload));
 		}
 
+		console.log(promises);
+
 		axios.all(promises)
 		.then(function(response){
-			toast("Expenses have been deleted!");
+			console.log("RESPONSE");
+			console.log(response);
+			console.log(response.length)
+			for(var i = 0; i < response.length; i++){
+				var index = response[i].data.deletedIndex;
+				c.state.expenses.splice(index, 1);
+			}
+			if(response.length > 1){
+				toast.info("Expenses have been deleted!");
+			}else if(response.length == 1){
+				toast.info("Expense has been deleted!");
+			}
 			
 		})
 		.catch(function (error){
-			console.log(error)
+			toast.error("An error has occured!");
 		});
 	}
 
@@ -188,6 +202,7 @@ class ExpenseList extends Component {
 					</Grid>
 				</div>
 				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>
+				<ToastContainer autoClose={4000} />
 			</div>
 		);
 	}
