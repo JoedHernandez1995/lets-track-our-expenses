@@ -6,12 +6,78 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
 
+import MUIDataTable from "mui-datatables";
+
+import axios from 'axios';
 import '../styles/App.css';
 
-class ExpenseList extends Component {
 
+const columns = [
+	{
+  		name: "location",
+  		label: "Label",
+  		options: {
+   			filter: false,
+   			sort: true,
+  		}	
+ 	},
+ 	{
+  		name: "cost",
+  		label: "Cost",
+  		options: {
+   			filter: false,
+   			sort: true,
+  		}	
+ 	},
+ 	{
+  		name: "expenseType",
+  		label: "Expense Type",
+  		options: {
+   			filter: true,
+   			sort: false,
+  		}	
+ 	},
+ 	{
+  		name: "category",
+  		label: "Category",
+  		options: {
+   			filter: true,
+   			sort: false,
+  		}	
+ 	},
+ 	{
+  		name: "subcategory",
+  		label: "Sub Category",
+  		options: {
+   			filter: false,
+   			sort: false,
+  		}	
+ 	},
+ 	{
+  		name: "note",
+  		label: "Note",
+  		options: {
+   			filter: false,
+   			sort: false,
+  		}	
+ 	},
+ 	{
+  		name: "date",
+  		label: "Date",
+  		options: {
+   			filter: false,
+   			sort: true,
+  		}	
+ 	},
+ 
+];
+
+const options = {
+  filterType: 'dropdown'
+};
+
+class ExpenseList extends Component {
 
 	constructor(){
 		super();
@@ -21,8 +87,7 @@ class ExpenseList extends Component {
 		}
 	}
 
-	componentDidMount(){
-
+	componentWillMount(){
 		this.getAllExpensesFromServer();
 	}
 
@@ -58,6 +123,7 @@ class ExpenseList extends Component {
 	}
 
 	render() {
+
 		return (
 			<div className={'safeAreaMargin'}>
 				<h1 style={{color: '#FFFFFF'}}>Expenses</h1>
@@ -67,52 +133,45 @@ class ExpenseList extends Component {
 						<Grid item xs={3}>
 							<Card>
 								<CardContent>
-									<Typography>
-										Remaining Budget: 
-									</Typography>
+									<h5 className={'smallCardHeader'}>Spent Today: </h5>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
 							<Card>
 								<CardContent>
-									<Typography>
-										Remaining Budget: 
-									</Typography>
+									<h5 className={'smallCardHeader'}>Spent This Month: </h5>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
 							<Card>
 								<CardContent>
-									<Typography>
-										Remaining Budget: 
-									</Typography>
+									<h5 className={'smallCardHeader'}>Total Spent Overall: </h5>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
 							<Card>
 								<CardContent>
-									<Typography>
-										Remaining Budget: 
-									</Typography>
+									<h5 className={'smallCardHeader'}>Remaining Budget: </h5>
 								</CardContent>
 							</Card>
-						</Grid>
-						<Grid item xs={6}>
 						</Grid>
 					</Grid>
 				</div>
-
+				<br />
 				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>
 					<Grid container spacing={8}>
 						<Grid item xs={12}>
 							<Card>
 								<CardContent>
-									<Typography>
-										Remaining Budget: 
-									</Typography>
+									<MUIDataTable
+									  title={"Expense List"}
+									  data={this.state.expenses}
+									  columns={columns}
+									  options={options}
+									/>
 								</CardContent>
 							</Card>
 						</Grid>

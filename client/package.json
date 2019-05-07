@@ -11,9 +11,10 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "material-ui": "^0.20.2",
-    "mdbreact": "^4.13.0",
+    "mui-datatables": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-material-ui-datatable": "2.0.0-alpha.16",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
     "typeface-roboto": "0.0.54"

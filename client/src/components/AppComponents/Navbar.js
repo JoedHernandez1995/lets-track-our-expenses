@@ -13,7 +13,7 @@ const NavBar = () => {
         <div>
         	<AppBar className={"topNavbar"} position="static" style={{ display: 'flex'}}>
             	<Toolbar style={{backgroundColor: '#FFFFFF'}}>
-            		<Typography className={"titleWhileOnline"} variant="h6">
+            		<Typography className={"titleNormal"} variant="h6">
 						Let's Track Our Expenses
 					</Typography>
 					<div style={{ flex: 1, textAlign: 'right'}}>
