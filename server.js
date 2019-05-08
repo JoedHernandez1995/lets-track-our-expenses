@@ -6,6 +6,7 @@ const models = require('./models/index');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 5000;
+const { Op } = require('sequelize')
 
 
 function GetFormattedDate(input){
@@ -103,6 +104,36 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 			totalExpenses: totalExpenses
 		}
 		res.json(expenseData);
+	})
+});
+
+app.post('/expenses/getExpensesCategoryDataByUserIdAndDateRange', (req, res) => {
+	models.Expense.findAll({
+		where: {
+			UserId: req.body.UserId,
+			date: {
+				[Op.gte]: req.body.startDate, 
+				[Op.lte]: req.body.endDate
+			}
+		}
+	})
+	.then((result) => {
+		var categories = ["General","Personal","House","Food & Drinks","Transport","Clothes","Fun","Miscellaneous"];
+		var categoryTotals = [];
+		for(var i = 0;i < categories.length; i++){
+			var categoryTotal = 0.0;
+			for(var j = 0; j < result.length; j++){
+				if (categories[i] == result[i].category){
+					categoryTotal += result[i].cost;
+				}
+			}
+			categoryTotals.push(categoryTotal);
+		}
+		var chartData = {
+			labels: categories,
+			data: categoryTotals
+		}
+		res.json(chartData);
 	})
 });
 
