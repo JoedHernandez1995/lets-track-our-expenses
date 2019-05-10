@@ -6,7 +6,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 
+import TextField from '@material-ui/core/TextField';
+
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
@@ -34,7 +37,6 @@ class Dashboard extends Component {
 	   			labels: response.data.labels,
 	   			datasets: [
 	   				{
-	   					label: "Expense Categories Current Month",
 	   					data: response.data.data,
 	   					backgroundColor: ["#c29ed7","#ad3111","#cde916","#5f2908","#d82b77","#c48e20","#fd887a","#2f9ba1"]
 
@@ -53,9 +55,56 @@ class Dashboard extends Component {
 			<div className={'safeAreaMargin'}>
 				<h1 style={{color: '#FFFFFF'}}>Dashboard</h1>
 
-				<Grid container spacing={8}>
+					<Grid container spacing={8}>
+
 						<Grid item xs={12}>
-							<Card>
+							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
+								<CardContent>
+									<h4>Filter by Date Range </h4><br />
+
+									<form noValidate>
+										<Grid container spacing={24}>
+
+											<Grid item xs={5}>
+												<TextField
+										        	id="date"
+										        	label="Start Date"
+										        	type="date"
+										        	defaultValue="2017-05-24"
+										        	
+										        	InputLabelProps={{
+										          		shrink: true,
+										        	}}
+										      	/>
+											</Grid>
+											<Grid item xs={5}>
+												<TextField
+										        	id="date"
+										        	label="End Date"
+										        	type="date"
+										        	defaultValue="2017-05-24"
+										        	
+										        	InputLabelProps={{
+										          		shrink: true,
+										        	}}
+										      	/>
+											</Grid>
+											<Grid item xs={2}>
+												<Button variant="contained" color="secondary">
+											        Search
+											  	</Button>
+											</Grid>
+										</Grid>
+								    </form>
+								</CardContent>
+							</Card>
+						</Grid>
+					</Grid>
+
+					<br />
+					<Grid container spacing={8}>
+						<Grid item xs={12}>
+							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 								<CardContent>
 									<Bar
 							          	data={this.state.data}
