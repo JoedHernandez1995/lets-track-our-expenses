@@ -37,9 +37,13 @@ class Dashboard extends Component {
 	   			labels: response.data.labels,
 	   			datasets: [
 	   				{
-	   					data: response.data.data,
-	   					backgroundColor: ["#c29ed7","#ad3111","#cde916","#5f2908","#d82b77","#c48e20","#fd887a","#2f9ba1"]
-
+	   						label: "Categories",
+	   						data: response.data.data,
+	   						backgroundColor: 'rgba(255,99,132,0.2)',
+					      	borderColor: 'rgba(255,99,132,1)',
+					      	borderWidth: 1,
+					      	hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+					      	hoverBorderColor: 'rgba(255,99,132,1)',
 	   				}
 	   			]
 	   		}
@@ -106,6 +110,8 @@ class Dashboard extends Component {
 						<Grid item xs={12}>
 							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 								<CardContent>
+									<h5>Money Spent by Category</h5>
+									<br />
 									<Bar
 							          	data={this.state.data}
 							          	width={100}
