@@ -123,8 +123,8 @@ app.post('/expenses/getExpensesCategoryDataByUserIdAndDateRange', (req, res) => 
 		for(var i = 0;i < categories.length; i++){
 			var categoryTotal = 0.0;
 			for(var j = 0; j < result.length; j++){
-				if (categories[i] == result[i].category){
-					categoryTotal += result[i].cost;
+				if (categories[i] == result[j].category){
+					categoryTotal += result[j].cost;
 				}
 			}
 			categoryTotals.push(categoryTotal);
