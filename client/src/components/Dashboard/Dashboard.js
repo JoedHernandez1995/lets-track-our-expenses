@@ -21,13 +21,13 @@ class Dashboard extends Component {
 	constructor(){
 		super();
 		this.state = {
-			data: {}
+			dashBoardData: {}
 		}
 	}
 
 	componentWillMount(){
 		var c = this;
-		var apiURL = "http://localhost:5000/expenses/getExpensesCategoryDataByUserIdAndDateRange";
+		var apiURL = "http://localhost:5000/expenses/getFullDashboardData";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			startDate: "04/01/2019",
@@ -35,23 +35,7 @@ class Dashboard extends Component {
 		}
 		axios.post(apiURL, payload)
 	   	.then(function (response) {
-
-	   		console.log(response)
-	   		var dataObject = {
-	   			labels: response.data.labels,
-	   			datasets: [
-	   				{
-	   						label: "Categories",
-	   						data: response.data.data,
-	   						backgroundColor: 'rgba(255,99,132,0.2)',
-					      	borderColor: 'rgba(255,99,132,1)',
-					      	borderWidth: 1,
-					      	hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-					      	hoverBorderColor: 'rgba(255,99,132,1)',
-	   				}
-	   			]
-	   		}
-	   		c.setState({data: dataObject})
+	   		c.setState({dashBoardData: response.data})
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
@@ -63,7 +47,7 @@ class Dashboard extends Component {
 	}
 
 	render() {
-
+		/*
 		const LineData = {
 		  	labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 		  	datasets: [
@@ -111,7 +95,7 @@ class Dashboard extends Component {
 			      	data: [400, 300, 150, 80, 375, 325, 500]
 		    	}
 		  	]
-		};
+		};*/
 		return (
 			<div className={'safeAreaMargin'}>
 				<h1 style={{color: '#FFFFFF'}}>Dashboard</h1>
@@ -170,7 +154,7 @@ class Dashboard extends Component {
 									<h5>Money Spent by Category</h5>
 									<br />
 									<Bar
-							          	data={this.state.data}
+							          	data={this.state.dashBoardData.expensesByCategories}
 							          	width={100}
 							          	height={300}
 							          	options={{
@@ -189,7 +173,7 @@ class Dashboard extends Component {
 									<h5>Expenses vs Income</h5>
 									<br />
 									<Line
-							          	data={LineData}
+							          	data={this.state.dashBoardData.incomeVsExpense}
 							          	width={100}
 							          	height={300}
 							          	options={{

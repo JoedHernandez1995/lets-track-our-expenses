@@ -107,7 +107,7 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 	})
 });
 
-app.post('/expenses/getExpensesCategoryDataByUserIdAndDateRange', (req, res) => {
+app.post('/expenses/getFullDashboardData', (req, res) => {
 	models.Expense.findAll({
 		where: {
 			UserId: req.body.UserId,
@@ -117,23 +117,158 @@ app.post('/expenses/getExpensesCategoryDataByUserIdAndDateRange', (req, res) => 
 			}
 		}
 	})
-	.then((result) => {
-		var categories = ["General","Personal","House","Food & Drinks","Transport","Clothes","Fun","Miscellaneous"];
-		var categoryTotals = [];
-		for(var i = 0;i < categories.length; i++){
-			var categoryTotal = 0.0;
-			for(var j = 0; j < result.length; j++){
-				if (categories[i] == result[j].category){
-					categoryTotal += result[j].cost;
+	.then((expenseResult) => {
+		models.Income.findAll({
+			where: {
+				UserId: req.body.UserId,
+				date: {
+					[Op.gte]: req.body.startDate, 
+					[Op.lte]: req.body.endDate
 				}
 			}
-			categoryTotals.push(categoryTotal);
-		}
-		var chartData = {
-			labels: categories,
-			data: categoryTotals
-		}
-		res.json(chartData);
+		})
+		.then((incomeResult) => {
+			//All Logic Code goes inside here
+
+
+
+			//Data for Bar chart
+			var categories = ["General","Personal","House","Food & Drinks","Transport","Clothes","Fun","Miscellaneous"];
+			var categoryTotals = [];
+			for(var i = 0;i < categories.length; i++){
+				var categoryTotal = 0.0;
+				for(var j = 0; j < expenseResult.length; j++){
+					if (categories[i] == expenseResult[j].category){
+						categoryTotal += expenseResult[j].cost;
+					}
+				}
+				categoryTotals.push(categoryTotal);
+			}
+
+			var expensesbyCategories = {
+				labels: categories,
+				datasets: [
+	   				{
+	   						label: "Categories",
+	   						data: categoryTotals,
+	   						backgroundColor: 'rgba(255,99,132,0.2)',
+					      	borderColor: 'rgba(255,99,132,1)',
+					      	borderWidth: 1,
+					      	hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+					      	hoverBorderColor: 'rgba(255,99,132,1)',
+	   				}
+	   			]
+			}
+
+			//Data for Expenses vs Income by date
+			var startMonth = (new Date(req.body.startDate)).getMonth() + 1;
+			var endMonth = (new Date(req.body.endDate)).getMonth() + 1;
+			//var currentMonth = (new Date()).getMonth() + 1;
+			var expenseTotalsByMonth = [];
+			var incomeTotalsByMonth = [];
+			var monthsUsed = [];
+			let months = [
+				"January",
+				"February",
+				"March",
+				"April",
+				"May",
+				"June",
+				"July",
+				"August",
+				"September",
+				"October",
+				"November",
+				"December"
+			]
+
+			
+			for(var i = startMonth; i <= endMonth; i++){
+				monthsUsed.push(months[(i-1)]);
+				var totalExpensesByMonth = 0.0;
+				var totalIncomeByMonth = 0.0;
+				//Expenses Data by Months
+				for (var j = 0; j < expenseResult.length; j++){
+					var expenseDate = new Date(expenseResult[j].date);
+					var expenseMonth = expenseDate.getMonth()+1;
+					
+					if (i == expenseMonth){
+						totalExpensesByMonth += expenseResult[j].cost;
+					} 
+				}
+				expenseTotalsByMonth.push(totalExpensesByMonth);
+				//Income Data by Months
+				for (var j = 0; j < incomeResult.length; j++){
+					var incomeDate = new Date(incomeResult[j].date);
+					var incomeMonth = incomeDate.getMonth()+1;
+					
+					if (i == incomeMonth){
+						totalIncomeByMonth += incomeResult[j].amount;
+					} 
+				}
+				incomeTotalsByMonth.push(totalIncomeByMonth);
+			}
+
+			var incomeVsExpense = {
+				labels: monthsUsed,
+				datasets: [
+					{
+						label: "Expenses",
+						data: expenseTotalsByMonth,
+						fill: false,
+				      	lineTension: 0.1,
+				      	backgroundColor: 'rgba(193, 68, 68, 0.4)',
+				      	borderColor: 'rgba(193, 68, 68, 1)',
+				      	borderCapStyle: 'butt',
+				      	borderDash: [],
+				      	borderDashOffset: 0.0,
+				      	borderJoinStyle: 'miter',
+				      	pointBorderColor: 'rgba(193, 68, 68, 1)',
+				      	pointBackgroundColor: '#fff',
+				      	pointBorderWidth: 1,
+				      	pointHoverRadius: 5,
+				      	pointHoverBackgroundColor: 'rgba(193, 68, 68, 1)',
+				      	pointHoverBorderColor: 'rgba(220,220,220,1)',
+				      	pointHoverBorderWidth: 2,
+				      	pointRadius: 1,
+				      	pointHitRadius: 10,
+					},
+					{
+						label: "Income",
+						data: incomeTotalsByMonth,
+						fill: false,
+				      	lineTension: 0.1,
+				      	backgroundColor: 'rgba(75,192,192,0.4)',
+				      	borderColor: 'rgba(75,192,192,1)',
+				      	borderCapStyle: 'butt',
+				      	borderDash: [],
+				      	borderDashOffset: 0.0,
+				      	borderJoinStyle: 'miter',
+				      	pointBorderColor: 'rgba(75,192,192,1)',
+				      	pointBackgroundColor: '#fff',
+				      	pointBorderWidth: 1,
+				      	pointHoverRadius: 5,
+				      	pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+				      	pointHoverBorderColor: 'rgba(220,220,220,1)',
+				      	pointHoverBorderWidth: 2,
+				      	pointRadius: 1,
+				      	pointHitRadius: 10,
+					}
+				]
+			}
+
+			var totalDashboardData = {
+				expensesByCategories: expensesbyCategories,
+				incomeVsExpense: incomeVsExpense
+			}
+
+			res.json(totalDashboardData);
+
+
+
+		})
+
+		
 	})
 });
 
