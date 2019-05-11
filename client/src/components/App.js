@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Switch, Route, Link } from 'react-router-dom';
 import logo from '../logo.svg';
 import './styles/App.css';
 
@@ -55,7 +55,7 @@ class App extends Component {
 
     }
     return (
-      <Router>
+      <HashRouter>
         <div className="App">
           {display}
           <Switch>
@@ -72,7 +72,7 @@ class App extends Component {
             <Route path="/income/viewIncome" component={ViewIncome} />
           </Switch>
         </div>
-      </Router>
+      </HashRouter>
       
     );
   }

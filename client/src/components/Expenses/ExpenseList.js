@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { ToastContainer, toast } from 'react-toastify';
 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+
 import MUIDataTable from "mui-datatables";
 
 import axios from 'axios';
@@ -201,6 +205,9 @@ class ExpenseList extends Component {
 						</Grid>
 					</Grid>
 				</div>
+				<Fab color="primary" aria-label="Add">
+			 		<AddIcon />
+			  	</Fab>
 				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>
 				<ToastContainer autoClose={4000} />
 			</div>

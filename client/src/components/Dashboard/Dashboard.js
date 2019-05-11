@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import {Bar} from 'react-chartjs-2';
+import {Bar,Line} from 'react-chartjs-2';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -13,7 +13,11 @@ import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
+
+
 class Dashboard extends Component {
+
+
 	constructor(){
 		super();
 		this.state = {
@@ -54,7 +58,60 @@ class Dashboard extends Component {
 	   	});
 	}
 
+	handleClick(event){
+
+	}
+
 	render() {
+
+		const LineData = {
+		  	labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+		  	datasets: [
+		    	{
+		      		label: 'Expenses',
+		      		fill: false,
+			      	lineTension: 0.1,
+			      	backgroundColor: 'rgba(75,192,192,0.4)',
+			      	borderColor: 'rgba(75,192,192,1)',
+			      	borderCapStyle: 'butt',
+			      	borderDash: [],
+			      	borderDashOffset: 0.0,
+			      	borderJoinStyle: 'miter',
+			      	pointBorderColor: 'rgba(75,192,192,1)',
+			      	pointBackgroundColor: '#fff',
+			      	pointBorderWidth: 1,
+			      	pointHoverRadius: 5,
+			      	pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+			      	pointHoverBorderColor: 'rgba(220,220,220,1)',
+			      	pointHoverBorderWidth: 2,
+			      	pointRadius: 1,
+			      	pointHitRadius: 10,
+			      	data: [65, 59, 80, 81, 56, 55, 40]
+		    	},
+
+		    	{
+		      		label: 'Income',
+		      		fill: false,
+			      	lineTension: 0.1,
+			      	backgroundColor: 'rgba(75,192,192,0.4)',
+			      	borderColor: 'rgba(75,192,192,1)',
+			      	borderCapStyle: 'butt',
+			      	borderDash: [],
+			      	borderDashOffset: 0.0,
+			      	borderJoinStyle: 'miter',
+			      	pointBorderColor: 'rgba(75,192,192,1)',
+			      	pointBackgroundColor: '#fff',
+			      	pointBorderWidth: 1,
+			      	pointHoverRadius: 5,
+			      	pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+			      	pointHoverBorderColor: 'rgba(220,220,220,1)',
+			      	pointHoverBorderWidth: 2,
+			      	pointRadius: 1,
+			      	pointHitRadius: 10,
+			      	data: [400, 300, 150, 80, 375, 325, 500]
+		    	}
+		  	]
+		};
 		return (
 			<div className={'safeAreaMargin'}>
 				<h1 style={{color: '#FFFFFF'}}>Dashboard</h1>
@@ -94,7 +151,7 @@ class Dashboard extends Component {
 										      	/>
 											</Grid>
 											<Grid item xs={2}>
-												<Button variant="contained" color="secondary">
+												<Button variant="contained" color="secondary" onClick={(event) => this.handleClick(event)}>
 											        Search
 											  	</Button>
 											</Grid>
@@ -114,6 +171,25 @@ class Dashboard extends Component {
 									<br />
 									<Bar
 							          	data={this.state.data}
+							          	width={100}
+							          	height={300}
+							          	options={{
+							            	maintainAspectRatio: false
+							          	}}
+							        />
+								</CardContent>
+							</Card>
+						</Grid>
+					</Grid>
+					<br />
+					<Grid container spacing={8}>
+						<Grid item xs={12}>
+							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
+								<CardContent>
+									<h5>Expenses vs Income</h5>
+									<br />
+									<Line
+							          	data={LineData}
 							          	width={100}
 							          	height={300}
 							          	options={{
