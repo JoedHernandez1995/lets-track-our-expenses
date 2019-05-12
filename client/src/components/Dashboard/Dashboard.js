@@ -10,10 +10,20 @@ import TextField from '@material-ui/core/TextField';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 
 import axios from 'axios';
 
+var date = new Date();
+var year = date.getFullYear();
+var month = ((date.getMonth()) + 1).toString();
+month = month.length > 1 ? month : "0" + month;
+var day = (date.getDate()).toString();
+day = day.length > 1 ? day : "0" + day;
 
+var startDate = month + "/" + "01/"+year;
+var endDate = month + "/" + day + "/" + year;
 
 class Dashboard extends Component {
 
@@ -21,17 +31,41 @@ class Dashboard extends Component {
 	constructor(){
 		super();
 		this.state = {
-			dashBoardData: {}
+			dashBoardData: {},
+			startDate: startDate,
+			endDate: endDate
 		}
 	}
 
-	componentWillMount(){
+	componentDidMount(){
+		this.getFullDashboardData();
+	}
+
+	parseDate(date){
+		var date = new Date(date);
+		var year = date.getFullYear();
+		var month = ((date.getMonth()) + 1).toString();
+		month = month.length > 1 ? month : "0" + month;
+		var day = (date.getDate()).toString();
+		day = day.length > 1 ? day : "0" + day;
+		return month + "/" + day + "/" + year;
+	}
+
+	handleStartDateChange = (date: any) => {
+		this.setState({startDate:this.parseDate(date)});
+	}
+
+	handleEndDateChange = (date: any) => {
+		this.setState({endDate:this.parseDate(date)});
+	}
+
+	getFullDashboardData(){
 		var c = this;
 		var apiURL = "http://localhost:5000/expenses/getFullDashboardData";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
-			startDate: "04/01/2019",
-			endDate: "05/09/2019"
+			startDate: this.state.startDate,
+			endDate: this.state.endDate
 		}
 		axios.post(apiURL, payload)
 	   	.then(function (response) {
@@ -43,60 +77,13 @@ class Dashboard extends Component {
 	}
 
 	handleClick(event){
-
+		this.getFullDashboardData();
 	}
 
 	render() {
-		/*
-		const LineData = {
-		  	labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-		  	datasets: [
-		    	{
-		      		label: 'Expenses',
-		      		fill: false,
-			      	lineTension: 0.1,
-			      	backgroundColor: 'rgba(75,192,192,0.4)',
-			      	borderColor: 'rgba(75,192,192,1)',
-			      	borderCapStyle: 'butt',
-			      	borderDash: [],
-			      	borderDashOffset: 0.0,
-			      	borderJoinStyle: 'miter',
-			      	pointBorderColor: 'rgba(75,192,192,1)',
-			      	pointBackgroundColor: '#fff',
-			      	pointBorderWidth: 1,
-			      	pointHoverRadius: 5,
-			      	pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-			      	pointHoverBorderColor: 'rgba(220,220,220,1)',
-			      	pointHoverBorderWidth: 2,
-			      	pointRadius: 1,
-			      	pointHitRadius: 10,
-			      	data: [65, 59, 80, 81, 56, 55, 40]
-		    	},
 
-		    	{
-		      		label: 'Income',
-		      		fill: false,
-			      	lineTension: 0.1,
-			      	backgroundColor: 'rgba(75,192,192,0.4)',
-			      	borderColor: 'rgba(75,192,192,1)',
-			      	borderCapStyle: 'butt',
-			      	borderDash: [],
-			      	borderDashOffset: 0.0,
-			      	borderJoinStyle: 'miter',
-			      	pointBorderColor: 'rgba(75,192,192,1)',
-			      	pointBackgroundColor: '#fff',
-			      	pointBorderWidth: 1,
-			      	pointHoverRadius: 5,
-			      	pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-			      	pointHoverBorderColor: 'rgba(220,220,220,1)',
-			      	pointHoverBorderWidth: 2,
-			      	pointRadius: 1,
-			      	pointHitRadius: 10,
-			      	data: [400, 300, 150, 80, 375, 325, 500]
-		    	}
-		  	]
-		};*/
 		return (
+
 			<div className={'safeAreaMargin'}>
 				<h1 style={{color: '#FFFFFF'}}>Dashboard</h1>
 
@@ -110,30 +97,29 @@ class Dashboard extends Component {
 									<form noValidate>
 										<Grid container spacing={24}>
 
-											<Grid item xs={5}>
-												<TextField
-										        	id="date"
-										        	label="Start Date"
-										        	type="date"
-										        	defaultValue="2017-05-24"
-										        	
-										        	InputLabelProps={{
-										          		shrink: true,
-										        	}}
-										      	/>
-											</Grid>
-											<Grid item xs={5}>
-												<TextField
-										        	id="date"
-										        	label="End Date"
-										        	type="date"
-										        	defaultValue="2017-05-24"
-										        	
-										        	InputLabelProps={{
-										          		shrink: true,
-										        	}}
-										      	/>
-											</Grid>
+											<MuiPickersUtilsProvider utils={DateFnsUtils}>
+										    	<Grid item xs={5}>
+										          	<DatePicker
+										            	margin="normal"
+										            	label="Start Date"
+										            	format="MM/dd/yyyy"
+										            	value={this.state.startDate}
+										            	onChange={this.handleStartDateChange}
+										          	/>
+										        </Grid>
+										  	</MuiPickersUtilsProvider>
+
+										  	<MuiPickersUtilsProvider utils={DateFnsUtils}>
+										    	<Grid item xs={5}>
+										          	<DatePicker
+										            	margin="normal"
+										            	label="End Date"
+										            	format="MM/dd/yyyy"
+										            	value={this.state.endDate}
+										            	onChange={this.handleEndDateChange}
+										          	/>
+										        </Grid>
+										  	</MuiPickersUtilsProvider>
 											<Grid item xs={2}>
 												<Button variant="contained" color="secondary" onClick={(event) => this.handleClick(event)}>
 											        Search
