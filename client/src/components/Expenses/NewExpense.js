@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-
+import Grid from '@material-ui/core/Grid';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import axios from 'axios';
-
+import '../styles/App.css';
 class NewExpense extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			expenseType:'',
-			category:'',
+			labelWidth: 0,
+			expenseType:'Personal',
+			category: 'General',
 			subcategory:'',
 			location:'',
 			note:'',
@@ -21,6 +28,21 @@ class NewExpense extends Component {
 			cost:''
 		}
 		
+	}
+
+	componentDidMount(){
+		this.setState({
+	    	labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+	    });
+	}
+
+	handleExpenseTypeChange = (event) => {
+		console.log(event);
+		this.setState({expenseType: event.target.value})
+	}
+
+	handleCategoryChange = (event) => {
+		this.setState({category: event.target.value})
 	}
 
 	handleClick(event){
@@ -54,34 +76,90 @@ class NewExpense extends Component {
 			<div className={'safeAreaMargin'}>
 				<h1>New Expense</h1>
 
-				<Card>
+				<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 					<CardContent>
 						<MuiThemeProvider>
 				   			<div>
-				           		<TextField
-				             		hintText="Enter Expense Type"
-				             		floatingLabelText="Expense Type"
-				             		onChange = {(event,newValue) => this.setState({expenseType:newValue})}
+				   				<Grid container spacing={24}>
+				   					<Grid item xs={6} style={{marginTop: '30px', marginLeft: '30px'}}>
+				   						<FormControl className={"selectBox"} variant="outlined" >
+					   						<InputLabel
+								            	ref={ref => {
+								              	this.InputLabelRef = ref;
+								            	}}
+								           	 	htmlFor="outlined-expense-type"
+								          	>
+								            Expense Type
+								          	</InputLabel>
+								          	<Select
+								            	value={this.state.expenseType}
+								            	onChange={this.handleExpenseTypeChange}
+								            	input={
+								              		<OutlinedInput
+								                		labelWidth={this.state.labelWidth}
+								                		name="expense-type"
+								                		id="outlined-expense-type"
+								              		/>
+								            	}
+								            	styles={{minWidth: '300px'}}
+								          	>
+									            <MenuItem value={'Personal'}>Personal</MenuItem>
+									            <MenuItem value={'Social'}>Social</MenuItem>
+									            <MenuItem value={'Work'}>Work</MenuItem>
+									            <MenuItem value={'Family'}>Family</MenuItem>
+								          	</Select>
+							          	</FormControl>
+							          	<FormControl className={"selectBox"} variant="outlined" style={{marginTop: '40px'}}>
+					   						<InputLabel
+								            	ref={ref => {
+								              	this.InputLabelRef = ref;
+								            	}}
+								           	 	htmlFor="outlined-category"
+								          	>
+								            Category
+								          	</InputLabel>
+								          	<Select
+								            	value={this.state.category}
+								            	onChange={this.handleCategoryChange}
+								            	input={
+								              		<OutlinedInput
+								                		labelWidth={this.state.labelWidth}
+								                		name="expense-category"
+								                		id="outlined-category"
+								              		/>
+								            	}
+								            	styles={{minWidth: '300px'}}
+								          	>
+									            <MenuItem value={'General'}>General</MenuItem>
+									            <MenuItem value={'Personal'}>Personal</MenuItem>
+									            <MenuItem value={'House'}>House</MenuItem>
+									            <MenuItem value={'Transport'}>Transport</MenuItem>
+									            <MenuItem value={'Clothes'}>Clothes</MenuItem>
+									            <MenuItem value={'Fun'}>Fun</MenuItem>
+									            <MenuItem value={'Miscellaneous'}>Miscellaneous</MenuItem>
+								          	</Select>
+							          	</FormControl>
+							          	<TextField
+						             		hintText="Enter Subcategory"
+						             		floatingLabelText="Subcategory"
+						             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
+						             		style={{width: '100%', marginTop: '30px'}}
+						             	/>
+						           		<br/>
+						           		<TextField
+						             		hintText="Enter Label"
+						             		floatingLabelText="Label"
+						             		onChange = {(event,newValue) => this.setState({location:newValue})}
+						             		style={{width: '100%', marginTop: '30px'}}
+						             	/>
+							        </Grid>
+							        <Grid item xs={6}>
+							          
+							        </Grid>
 
-				             	/>
-				          	 	<br/>
-				           		<TextField
-				             		hintText="Enter Category"
-				             		floatingLabelText="Category"
-				             		onChange = {(event,newValue) => this.setState({category:newValue})}
-				             	/>
-				           		<br/>
-				           		<TextField
-				             		hintText="Enter Subcategory"
-				             		floatingLabelText="Subcategory"
-				             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
-				             	/>
-				           		<br/>
-				           		<TextField
-				             		hintText="Enter Label"
-				             		floatingLabelText="Label"
-				             		onChange = {(event,newValue) => this.setState({location:newValue})}
-				             	/>
+								</Grid>
+				           		
+				           		
 				           		<br/>
 				           		<TextField
 				             		hintText="Enter Notes"
