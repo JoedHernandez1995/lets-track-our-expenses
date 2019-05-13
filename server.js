@@ -6,8 +6,32 @@ const models = require('./models/index');
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 5000;
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
+
+function getTodaysDate(){
+	var date = new Date();
+	var d = date.getDate();
+	var m = date.getMonth() ;
+	m += 1;
+	var y = date.getFullYear();
+	return m + "/" + d + "/" + y; 
+}
+
+function getCurrentMonth(){
+	var date = new Date();
+	var m = date.getMonth();
+	m += 1;
+	return m
+}
+
+
+function getMonthFromDate(input){
+	var date = new Date(input);
+	var m = date.getMonth();
+	m += 1;
+	return m 
+}
 
 function GetFormattedDate(input){
 	var date = new Date(input);
@@ -92,18 +116,44 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 			UserId: req.body.UserId,
 		}
 	})
-	.then((result) => {
-		var totalExpenses = 0;
+	.then((expenseResult) => {
+		models.Income.findAll({
+			where: {
+				UserId: req.body.UserId
+			}
+		})
+		.then((incomeResult) =>{
+			var totalExpenses = 0;
+			var totalSpentToday = 0.0;
+			var totalExpensesCurrentMonth = 0.0;
+			var totalIncome = 0;
+			expenseResult.forEach((entry) => {
+				entry.dataValues.date = GetFormattedDate(entry.dataValues.date);
+				totalExpenses += entry.dataValues.cost;
 
-		result.forEach((entry) => {
-			entry.dataValues.date = GetFormattedDate(entry.dataValues.date);
-			totalExpenses += entry.dataValues.cost;
-		});
-		var expenseData = {
-			expenseList: result,
-			totalExpenses: totalExpenses
-		}
-		res.json(expenseData);
+				if(entry.dataValues.date == getTodaysDate()){
+					totalSpentToday += entry.dataValues.cost;
+				}
+
+				if(getMonthFromDate(entry.dataValues.date) == getCurrentMonth()){
+					totalExpensesCurrentMonth += entry.dataValues.cost;
+				}
+			});
+
+			incomeResult.forEach((entry) => {
+				totalIncome += entry.dataValues.amount;
+			});
+
+			var expenseData = {
+				expenseList: expenseResult,
+				todaySpent: totalSpentToday,
+				totalExpensesCurrentMonth: totalExpensesCurrentMonth,
+				totalExpenses: totalExpenses,
+				remainingBudget: totalIncome - totalExpenses
+			}
+			res.json(expenseData);
+		})
+		
 	})
 });
 

@@ -3,6 +3,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+
 import axios from 'axios';
 
 class NewExpense extends Component {
@@ -48,57 +51,61 @@ class NewExpense extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={'safeAreaMargin'}>
 				<h1>New Expense</h1>
 
-				<MuiThemeProvider>
-		   			<div>
-		           		<TextField
-		             		hintText="Enter Expense Type"
-		             		floatingLabelText="Expense Type"
-		             		onChange = {(event,newValue) => this.setState({expenseType:newValue})}
+				<Card>
+					<CardContent>
+						<MuiThemeProvider>
+				   			<div>
+				           		<TextField
+				             		hintText="Enter Expense Type"
+				             		floatingLabelText="Expense Type"
+				             		onChange = {(event,newValue) => this.setState({expenseType:newValue})}
 
-		             	/>
-		          	 	<br/>
-		           		<TextField
-		             		hintText="Enter Category"
-		             		floatingLabelText="Category"
-		             		onChange = {(event,newValue) => this.setState({category:newValue})}
-		             	/>
-		           		<br/>
-		           		<TextField
-		             		hintText="Enter Subcategory"
-		             		floatingLabelText="Subcategory"
-		             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
-		             	/>
-		           		<br/>
-		           		<TextField
-		             		hintText="Enter Label"
-		             		floatingLabelText="Label"
-		             		onChange = {(event,newValue) => this.setState({location:newValue})}
-		             	/>
-		           		<br/>
-		           		<TextField
-		             		hintText="Enter Notes"
-		             		floatingLabelText="Notes"
-		             		onChange = {(event,newValue) => this.setState({note:newValue})}
-		             	/>
-		             	<br/>
-		           		<TextField
-		             		hintText="Enter Date"
-		             		floatingLabelText="Date"
-		             		onChange = {(event,newValue) => this.setState({date:newValue})}
-		             	/>
-		             	<br/>
-		           		<TextField
-		             		hintText="Enter Cost"
-		             		floatingLabelText="Cost"
-		             		onChange = {(event,newValue) => this.setState({cost:newValue})}
-		             	/>
-		             	<br/>
-		           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-		          	</div>
-		    	</MuiThemeProvider>
+				             	/>
+				          	 	<br/>
+				           		<TextField
+				             		hintText="Enter Category"
+				             		floatingLabelText="Category"
+				             		onChange = {(event,newValue) => this.setState({category:newValue})}
+				             	/>
+				           		<br/>
+				           		<TextField
+				             		hintText="Enter Subcategory"
+				             		floatingLabelText="Subcategory"
+				             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
+				             	/>
+				           		<br/>
+				           		<TextField
+				             		hintText="Enter Label"
+				             		floatingLabelText="Label"
+				             		onChange = {(event,newValue) => this.setState({location:newValue})}
+				             	/>
+				           		<br/>
+				           		<TextField
+				             		hintText="Enter Notes"
+				             		floatingLabelText="Notes"
+				             		onChange = {(event,newValue) => this.setState({note:newValue})}
+				             	/>
+				             	<br/>
+				           		<TextField
+				             		hintText="Enter Date"
+				             		floatingLabelText="Date"
+				             		onChange = {(event,newValue) => this.setState({date:newValue})}
+				             	/>
+				             	<br/>
+				           		<TextField
+				             		hintText="Enter Cost"
+				             		floatingLabelText="Cost"
+				             		onChange = {(event,newValue) => this.setState({cost:newValue})}
+				             	/>
+				             	<br/>
+				           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+				          	</div>
+				    	</MuiThemeProvider>
+					</CardContent>
+				</Card>
 
 
 				<Link to={'/expenses'}> Back </Link>

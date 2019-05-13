@@ -24,7 +24,10 @@ class ExpenseList extends Component {
 		super();
 		this.state = {
 			expenses: [],
-			totalExpenses: 0
+			totalExpenses: 0.0,
+			todaySpent: 0.0,
+			totalExpensesCurrentMonth: 0.0,
+			remainingBudget: 0.0
 		}
 	}
 
@@ -42,6 +45,9 @@ class ExpenseList extends Component {
 	   	.then(function (response) {
 	   		c.setState({expenses: response.data.expenseList});
 	   		c.setState({totalExpenses: response.data.totalExpenses});
+	   		c.setState({todaySpent: response.data.todaySpent});
+	   		c.setState({totalExpensesCurrentMonth: response.data.totalExpensesCurrentMonth});
+	   		c.setState({remainingBudget: response.data.remainingBudget});
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
@@ -159,35 +165,39 @@ class ExpenseList extends Component {
 
 		return (
 			<div className={'safeAreaMargin'}>
-				<h1 style={{color: '#FFFFFF'}}>Expenses</h1>
+				<h1>Expenses</h1>
 
 				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>
 					<Grid container spacing={8}>
 						<Grid item xs={3}>
-							<Card>
+							<Card style={{backgroundColor: '#0092B3', color: 'white'}}>
 								<CardContent>
 									<h5 className={'smallCardHeader'}>Spent Today: </h5>
+									<h3>L. {this.state.todaySpent}</h3>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
-							<Card>
+							<Card style={{backgroundColor: '#FF823B', color: 'white'}}>
 								<CardContent>
 									<h5 className={'smallCardHeader'}>Spent This Month: </h5>
+									<h3>L. {this.state.totalExpensesCurrentMonth}</h3>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
-							<Card>
+							<Card style={{backgroundColor: '#FF6262', color: 'white'}}>
 								<CardContent>
 									<h5 className={'smallCardHeader'}>Total Spent Overall: </h5>
+									<h3>L. {this.state.totalExpenses}</h3>
 								</CardContent>
 							</Card>
 						</Grid>
 						<Grid item xs={3}>
-							<Card>
+							<Card style={{backgroundColor: '#59AD4D', color: 'white'}}>
 								<CardContent>
 									<h5 className={'smallCardHeader'}>Remaining Budget: </h5>
+									<h3>L. {this.state.remainingBudget} </h3>
 								</CardContent>
 							</Card>
 						</Grid>
