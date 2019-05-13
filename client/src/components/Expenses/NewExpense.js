@@ -12,8 +12,18 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import axios from 'axios';
 import '../styles/App.css';
+
+var date = new Date();
+var year = date.getFullYear();
+var month = ((date.getMonth()) + 1).toString();
+var day = (date.getDate()).toString();
+var today = month + "/" + day + "/" + year;
+
+
 class NewExpense extends Component {
 	constructor(props){
 		super(props);
@@ -24,10 +34,20 @@ class NewExpense extends Component {
 			subcategory:'',
 			location:'',
 			note:'',
-			date:'',
+			date: today,
 			cost:''
 		}
 		
+	}
+
+	parseDate(date){
+		var date = new Date(date);
+		var year = date.getFullYear();
+		var month = ((date.getMonth()) + 1).toString();
+		month = month.length > 1 ? month : "0" + month;
+		var day = (date.getDate()).toString();
+		day = day.length > 1 ? day : "0" + day;
+		return month + "/" + day + "/" + year;
 	}
 
 	componentDidMount(){
@@ -43,6 +63,10 @@ class NewExpense extends Component {
 
 	handleCategoryChange = (event) => {
 		this.setState({category: event.target.value})
+	}
+
+	handleDateChange = (date: any) => {
+		this.setState({date:this.parseDate(date)});
 	}
 
 	handleClick(event){
@@ -81,7 +105,7 @@ class NewExpense extends Component {
 						<MuiThemeProvider>
 				   			<div>
 				   				<Grid container spacing={24}>
-				   					<Grid item xs={6} style={{marginTop: '30px', marginLeft: '30px'}}>
+				   					<Grid item xs={6} style={{marginTop: '30px'}}>
 				   						<FormControl className={"selectBox"} variant="outlined" >
 					   						<InputLabel
 								            	ref={ref => {
@@ -152,41 +176,46 @@ class NewExpense extends Component {
 						             		onChange = {(event,newValue) => this.setState({location:newValue})}
 						             		style={{width: '100%', marginTop: '30px'}}
 						             	/>
+						             	<br />
+						             	<br />
+						             	<Link to={'/expenses'} style={{float: 'left'}}> Back </Link>
 							        </Grid>
 							        <Grid item xs={6}>
-							          
+							    		<TextField
+						             		hintText="Enter Notes"
+						             		floatingLabelText="Notes"
+						             		multiline
+          									rowsMax="4"
+						             		onChange = {(event,newValue) => this.setState({note:newValue})}
+						             		style={{width: '100%', marginTop: '30px'}}
+						             	/>
+						             	<br/>
+						             	<MuiPickersUtilsProvider utils={DateFnsUtils}>
+							             	<DatePicker
+												margin="normal"
+											   	label="Date"
+											   	format="MM/dd/yyyy"
+											    value={this.state.date}
+											    onChange={this.handleDateChange}
+											    style={{width: '100%', marginTop: '30px'}}
+											/>
+										</MuiPickersUtilsProvider>
+						             	<br/>
+						           		<TextField
+						           			type="number"
+						             		hintText="Enter Cost"
+						             		floatingLabelText="Cost"
+						             		onChange = {(event,newValue) => this.setState({cost:newValue})}
+						             		style={{width: '100%', marginTop: '25px'}}
+						             	/>
+						             	<br/>
+						           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 							        </Grid>
-
 								</Grid>
-				           		
-				           		
-				           		<br/>
-				           		<TextField
-				             		hintText="Enter Notes"
-				             		floatingLabelText="Notes"
-				             		onChange = {(event,newValue) => this.setState({note:newValue})}
-				             	/>
-				             	<br/>
-				           		<TextField
-				             		hintText="Enter Date"
-				             		floatingLabelText="Date"
-				             		onChange = {(event,newValue) => this.setState({date:newValue})}
-				             	/>
-				             	<br/>
-				           		<TextField
-				             		hintText="Enter Cost"
-				             		floatingLabelText="Cost"
-				             		onChange = {(event,newValue) => this.setState({cost:newValue})}
-				             	/>
-				             	<br/>
-				           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
 				          	</div>
 				    	</MuiThemeProvider>
 					</CardContent>
 				</Card>
-
-
-				<Link to={'/expenses'}> Back </Link>
 			</div>
 		);
 	}
