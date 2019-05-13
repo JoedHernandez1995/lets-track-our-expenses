@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { ToastContainer, toast } from 'react-toastify';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -205,10 +206,15 @@ class ExpenseList extends Component {
 						</Grid>
 					</Grid>
 				</div>
-				<Fab color="primary" aria-label="Add">
-			 		<AddIcon />
-			  	</Fab>
-				<Link to={'/expenses/newExpense'}> Add NewExpense </Link>
+				<br />
+				<br />
+				<br />
+				<br />
+				<Tooltip title="Add New Expense" aria-label="Add New Expense">
+					<Fab component={Link} to='/expenses/newExpense' color="primary" aria-label="Add" style={{position: 'fixed', bottom: '20px', right: '20px', backgroundColor: 'green'}}>
+				 		<AddIcon />
+				  	</Fab>
+				</Tooltip>
 				<ToastContainer autoClose={4000} />
 			</div>
 		);
