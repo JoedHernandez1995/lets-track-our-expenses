@@ -388,22 +388,49 @@ app.get('/incomes/getAllIncomes', (req, res) => {
 });
 
 app.post('/incomes/getAllIncomesByUserId', (req, res) => {
-	console.log(req);
-	models.Income.findAll({
+	models.Expense.findAll({
 		where: {
 			UserId: req.body.UserId,
 		}
 	})
-	.then((result) => {
-		var totalIncome = 0;
-		result.forEach((entry) => {
-			totalIncome += entry.dataValues.amount;
-		});
-		var incomeData = {
-			incomeList: result,
-			totalIncome: totalIncome
-		}
-		res.json(incomeData);
+	.then((expenseResult) => {
+		models.Income.findAll({
+			where: {
+				UserId: req.body.UserId
+			}
+		})
+		.then((incomeResult) =>{
+			var totalIncome = 0;
+			var totalEarnedToday = 0.0;
+			var totalIncomeCurrentMonth = 0.0;
+			var totalExpenses = 0;
+			incomeResult.forEach((entry) => {
+				entry.dataValues.date = GetFormattedDate(entry.dataValues.date);
+				totalIncome += entry.dataValues.amount;
+
+				if(entry.dataValues.date == getTodaysDate()){
+					totalEarnedToday += entry.dataValues.amount;
+				}
+
+				if(getMonthFromDate(entry.dataValues.date) == getCurrentMonth()){
+					totalIncomeCurrentMonth += entry.dataValues.amount;
+				}
+			});
+
+			expenseResult.forEach((entry) => {
+				totalExpenses += entry.dataValues.cost;
+			});
+
+			var incomeData = {
+				incomeList: incomeResult,
+				todayEarned: totalEarnedToday,
+				totalIncomeCurrentMonth: totalIncomeCurrentMonth,
+				totalIncome: totalIncome,
+				remainingBudget: totalIncome - totalExpenses
+			}
+			res.json(incomeData);
+		})
+		
 	})
 });
 

@@ -4,6 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.FLOAT,
     date: DataTypes.DATE,
     label: DataTypes.STRING,
+    incomeType: DataTypes.STRING,
+    incomeTypeCategory: DataTypes.STRING,
     UserId: DataTypes.INTEGER
   }, {});
   Income.associate = function(models) {

@@ -19,7 +19,6 @@ class Income extends Component {
 			totalIncomeCurrentMonth: 0.0,
 			totalIncome: 0.0,
 			remainingBudget: 0.0
-
 		}
 	}
 
@@ -39,6 +38,9 @@ class Income extends Component {
 	   	.then(function (response) {
 	   		c.setState({incomeList: response.data.incomeList});
 	   		c.setState({totalIncome: response.data.totalIncome});
+	   		c.setState({todayEarned: response.data.todayEarned});
+	   		c.setState({totalIncomeCurrentMonth: response.data.totalIncomeCurrentMonth});
+	   		c.setState({remainingBudget: response.data.remainingBudget});
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
