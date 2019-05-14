@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import '../styles/App.css';
 
@@ -69,30 +70,59 @@ class NewExpense extends Component {
 		this.setState({date:this.parseDate(date)});
 	}
 
-	handleClick(event){
+	handleClick = (event) => {
 		var apiURL = "http://localhost:5000/expenses/createNewExpense";
-		var self = this;
-	    var payload = {
-	    	"expenseType": this.state.expenseType,
-			"category": this.state.category,
-			"subcategory": this.state.subcategory,
-			"location": this.state.location,
-			"note": this.state.note,
-			"date": this.state.date,
-			"cost": parseFloat(this.state.cost),
-			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+	    var validData = true;
+	    var self = this;
+	    //Check for valid data
+	    if (this.state.subcategory == ''){
+	    	validData = false;
 	    }
-	    axios.post(apiURL, payload)
-	   	.then(function (response) {
-	    	console.log(response);
-	     	if(response.data.code == 200){
-	      		console.log("Expense added successfull");
+
+	    if (this.state.location == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.cost == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.notes == ''){
+	    	validData = false;
+	    }
+
+	    if (validData){
+	    	var payload = {
+		    	"expenseType": this.state.expenseType,
+				"category": this.state.category,
+				"subcategory": this.state.subcategory,
+				"location": this.state.location,
+				"note": this.state.note,
+				"date": this.state.date,
+				"cost": parseFloat(this.state.cost),
+				"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+		    }
+	    	axios.post(apiURL, payload)
+		   	.then(function (response) {
+		    	console.log(response);
+		     	if(response.status == 200){
+		      		toast.success("Expense has been added successfully!");
+		      		self.setState({expenseType: 'Personal'});
+		      		self.setState({category: 'General'});
+		      		self.setState({subcategory: ''});
+		      		self.setState({location: ''});
+		      		self.setState({note: ''});
+		      		self.setState({date: today});
+		      		self.setState({cost: ''});
+		     	}
+		   	})
+		   	.catch(function (error) {
+		     	console.log(error);
+		   	});	
+	    }else{
+	    	toast.error("Please fill out all the expense information!");
+	    }
 	    
-	     	}
-	   	})
-	   	.catch(function (error) {
-	     	console.log(error);
-	   	});
 	}
 
 	render() {
@@ -157,6 +187,7 @@ class NewExpense extends Component {
 									            <MenuItem value={'General'}>General</MenuItem>
 									            <MenuItem value={'Personal'}>Personal</MenuItem>
 									            <MenuItem value={'House'}>House</MenuItem>
+									            <MenuItem value={'Food-Drinks'}>Food & Drinks</MenuItem>
 									            <MenuItem value={'Transport'}>Transport</MenuItem>
 									            <MenuItem value={'Clothes'}>Clothes</MenuItem>
 									            <MenuItem value={'Fun'}>Fun</MenuItem>
@@ -164,14 +195,14 @@ class NewExpense extends Component {
 								          	</Select>
 							          	</FormControl>
 							          	<TextField
-						             		hintText="Enter Subcategory"
+							          		value={this.state.subcategory}
 						             		floatingLabelText="Subcategory"
 						             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
 						             		style={{width: '100%', marginTop: '30px'}}
 						             	/>
 						           		<br/>
 						           		<TextField
-						             		hintText="Enter Label"
+						           			value={this.state.location}
 						             		floatingLabelText="Label"
 						             		onChange = {(event,newValue) => this.setState({location:newValue})}
 						             		style={{width: '100%', marginTop: '30px'}}
@@ -181,17 +212,18 @@ class NewExpense extends Component {
 						             	<Link to={'/expenses'} style={{float: 'left'}}> Back </Link>
 							        </Grid>
 							        <Grid item xs={6}>
-							    		<TextField
-						             		hintText="Enter Notes"
-						             		floatingLabelText="Notes"
-						             		multiline
-          									rowsMax="4"
-						             		onChange = {(event,newValue) => this.setState({note:newValue})}
-						             		style={{width: '100%', marginTop: '30px'}}
+							        	<TextField
+							        		value={this.state.cost}
+						           			type="number"
+						             		floatingLabelText="Cost"
+						             		onChange = {(event,newValue) => this.setState({cost:newValue})}
+						             		style={{width: '100%', marginTop: '25px'}}
 						             	/>
+							    		
 						             	<br/>
 						             	<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							             	<DatePicker
+
 												margin="normal"
 											   	label="Date"
 											   	format="MM/dd/yyyy"
@@ -202,11 +234,10 @@ class NewExpense extends Component {
 										</MuiPickersUtilsProvider>
 						             	<br/>
 						           		<TextField
-						           			type="number"
-						             		hintText="Enter Cost"
-						             		floatingLabelText="Cost"
-						             		onChange = {(event,newValue) => this.setState({cost:newValue})}
-						             		style={{width: '100%', marginTop: '25px'}}
+						           			value={this.state.note}
+						             		floatingLabelText="Notes"
+						             		onChange = {(event,newValue) => this.setState({note:newValue})}
+						             		style={{width: '100%', marginTop: '30px'}}
 						             	/>
 						             	<br/>
 						           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
@@ -216,6 +247,7 @@ class NewExpense extends Component {
 				    	</MuiThemeProvider>
 					</CardContent>
 				</Card>
+				<ToastContainer autoClose={4000} />
 			</div>
 		);
 	}

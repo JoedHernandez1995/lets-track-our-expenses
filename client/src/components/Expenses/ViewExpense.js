@@ -3,6 +3,16 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import { ToastContainer, toast } from 'react-toastify';
 
 import axios from 'axios';
@@ -33,31 +43,49 @@ class ViewExpense extends Component {
 	handleClick(){
 		var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
 		var self = this;
-	    var payload = {
-	    	"expenseType": this.state.expenseType,
-			"category": this.state.category,
-			"subcategory": this.state.subcategory,
-			"location": this.state.location,
-			"note": this.state.note,
-			"date": this.state.date,
-			"cost": parseFloat(this.state.cost),
-			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
-			"id": this.props.location.state.id
+		var validData = true;
+	    //Check for valid data
+	    if (this.state.subcategory == ''){
+	    	validData = false;
 	    }
-	    axios.post(apiURL, payload)
-	   	.then(function (response) {
-	    	console.log(response);
-	     	if(response.status == 200){
-	     		toast.success("Expense has been updated!", {
-			        position: toast.POSITION.TOP_RIGHT
-			    });
-	      		console.log("Expense updated successfull");
-	    		
-	     	}
-	   	})
-	   	.catch(function (error) {
-	     	console.log(error);
-	   	});
+
+	    if (this.state.location == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.cost == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.notes == ''){
+	    	validData = false;
+	    }
+
+	    if (validData) {
+		    var payload = {
+		    	"expenseType": this.state.expenseType,
+				"category": this.state.category,
+				"subcategory": this.state.subcategory,
+				"location": this.state.location,
+				"note": this.state.note,
+				"date": this.state.date,
+				"cost": parseFloat(this.state.cost),
+				"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+				"id": this.props.location.state.id
+		    }
+		    axios.post(apiURL, payload)
+		   	.then(function (response) {
+		    	console.log(response);
+		     	if(response.status == 200){
+		     		toast.success("Expense has been updated!", {
+				        position: toast.POSITION.TOP_RIGHT
+				    });		    		
+		     	}
+		   	})
+		   	.catch(function (error) {
+		     	console.log(error);
+		   	});
+		}
 	}
 
 	componentDidMount(){
@@ -91,67 +119,127 @@ class ViewExpense extends Component {
 
 	render() {
 		return (
-			<div className={'safeAreaMargin'}>
-				<MuiThemeProvider>
-					<h1>View Expense</h1>
+				<div className={'safeAreaMargin'}>
+					<h1>Expense Data for: {this.state.location}</h1>
+					<Card style={{marginLeft: '20px', marginRight: '20px'}}>
+						<CardContent>
+							<MuiThemeProvider>
+					   			<div>
+					   				<Grid container spacing={24}>
+					   					<Grid item xs={6} style={{marginTop: '30px'}}>
+					   						<FormControl className={"selectBox"} variant="outlined" >
+						   						<InputLabel
+									            	ref={ref => {
+									              	this.InputLabelRef = ref;
+									            	}}
+									           	 	htmlFor="outlined-expense-type"
+									          	>
+									            Expense Type
+									          	</InputLabel>
+									          	<Select
+									            	value={this.state.expenseType}
+									            	onChange={this.handleExpenseTypeChange}
+									            	input={
+									              		<OutlinedInput
+									                		labelWidth={this.state.labelWidth}
+									                		name="expense-type"
+									                		id="outlined-expense-type"
+									              		/>
+									            	}
+									            	styles={{minWidth: '300px'}}
+									          	>
+										            <MenuItem value={'Personal'}>Personal</MenuItem>
+										            <MenuItem value={'Social'}>Social</MenuItem>
+										            <MenuItem value={'Work'}>Work</MenuItem>
+										            <MenuItem value={'Family'}>Family</MenuItem>
+									          	</Select>
+								          	</FormControl>
+								          	<FormControl className={"selectBox"} variant="outlined" style={{marginTop: '40px'}}>
+						   						<InputLabel
+									            	ref={ref => {
+									              	this.InputLabelRef = ref;
+									            	}}
+									           	 	htmlFor="outlined-category"
+									          	>
+									            Category
+									          	</InputLabel>
+									          	<Select
+									            	value={this.state.category}
+									            	onChange={this.handleCategoryChange}
+									            	input={
+									              		<OutlinedInput
+									                		labelWidth={this.state.labelWidth}
+									                		name="expense-category"
+									                		id="outlined-category"
+									              		/>
+									            	}
+									            	styles={{minWidth: '300px'}}
+									          	>
+										            <MenuItem value={'General'}>General</MenuItem>
+										            <MenuItem value={'Personal'}>Personal</MenuItem>
+										            <MenuItem value={'House'}>House</MenuItem>
+										            <MenuItem value={'Food-Drinks'}>Food & Drinks</MenuItem>
+										            <MenuItem value={'Transport'}>Transport</MenuItem>
+										            <MenuItem value={'Clothes'}>Clothes</MenuItem>
+										            <MenuItem value={'Fun'}>Fun</MenuItem>
+										            <MenuItem value={'Miscellaneous'}>Miscellaneous</MenuItem>
+									          	</Select>
+								          	</FormControl>
+								          	<TextField
+								          		value={this.state.subcategory}
+							             		floatingLabelText="Subcategory"
+							             		onChange = {(event,newValue) => this.setState({subcategory:newValue})}
+							             		style={{width: '100%', marginTop: '30px'}}
+							             	/>
+							           		<br/>
+							           		<TextField
+							           			value={this.state.location}
+							             		floatingLabelText="Label"
+							             		onChange = {(event,newValue) => this.setState({location:newValue})}
+							             		style={{width: '100%', marginTop: '30px'}}
+							             	/>
+							             	<br />
+							             	<br />
+							             	<Link to={'/expenses'} style={{float: 'left'}}> Back </Link>
+								        </Grid>
+								        <Grid item xs={6}>
+								        	<TextField
+								        		value={this.state.cost}
+							           			type="number"
+							             		floatingLabelText="Cost"
+							             		onChange = {(event,newValue) => this.setState({cost:newValue})}
+							             		style={{width: '100%', marginTop: '25px'}}
+							             	/>
+								    		
+							             	<br/>
+							             	<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								             	<DatePicker
 
-					<h5>ID: {this.state.id}</h5>
-
-					<TextField
-						hintText="Enter Expense Type"
-						value={this.state.expenseType}
-						floatingLabelText="Expense Type"
-						onChange = {(event, newValue) => this.setState({expenseType:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter Category"
-						value={this.state.category}
-						floatingLabelText="Category"
-						onChange = {(event, newValue) => this.setState({category:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter SubCategory"
-						value={this.state.subcategory}
-						floatingLabelText="Sub Category"
-						onChange = {(event, newValue) => this.setState({subcategory:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter Label"
-						value={this.state.location}
-						floatingLabelText="Label"
-						onChange = {(event, newValue) => this.setState({location:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter Note"
-						value={this.state.note}
-						floatingLabelText="Notes"
-						onChange = {(event, newValue) => this.setState({note:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter Date"
-						value={this.state.date}
-						floatingLabelText="Date"
-						onChange = {(event, newValue) => this.setState({date:newValue})}
-					/>
-					<br/>
-					<TextField
-						hintText="Enter Cost"
-						value={this.state.cost}
-						floatingLabelText="Cost"
-						onChange = {(event, newValue) => this.setState({cost:newValue})}
-					/>
-					<br/>
-			    	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-
-			    </MuiThemeProvider>
-			    <ToastContainer autoClose={4000} />
-				<Link to={'/expenses'}> Back </Link>
-			</div>
+													margin="normal"
+												   	label="Date"
+												   	format="MM/dd/yyyy"
+												    value={this.state.date}
+												    onChange={this.handleDateChange}
+												    style={{width: '100%', marginTop: '30px'}}
+												/>
+											</MuiPickersUtilsProvider>
+							             	<br/>
+							           		<TextField
+							           			value={this.state.note}
+							             		floatingLabelText="Notes"
+							             		onChange = {(event,newValue) => this.setState({note:newValue})}
+							             		style={{width: '100%', marginTop: '30px'}}
+							             	/>
+							             	<br/>
+							             	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+								        </Grid>
+									</Grid>
+					          	</div>
+					    	</MuiThemeProvider>
+						</CardContent>
+					</Card>
+			   	 	<ToastContainer autoClose={4000} />
+				</div>
 		);
 	}
 }
