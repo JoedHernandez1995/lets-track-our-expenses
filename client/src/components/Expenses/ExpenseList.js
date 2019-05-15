@@ -27,7 +27,7 @@ class ExpenseList extends Component {
 			totalExpenses: 0.0,
 			todaySpent: 0.0,
 			totalExpensesCurrentMonth: 0.0,
-			remainingBudget: 0.0
+			remainingBudget: 0.0,
 		}
 	}
 

@@ -59,7 +59,7 @@ class App extends Component {
         <div className="App">
           {display}
           <Switch>
-            <Route exact path="/" component={Index}/>
+            <Route exact path="/" component={Login}/>
             <Route exact path="/expenses" component={ExpenseList}/>
             <Route exact path="/dashboard" component={Dashboard}/>
             <Route exact path="/income" component={IncomeList}/>

@@ -66,6 +66,8 @@ app.post('/authentication/loginUser', (req, res) => {
 	}).then((result) => {
 		if(result){
 			const UserData = {
+				firstName: result.firstName,
+				lastName: result.lastName,
 				email: result.email,
 				UserId: result.id
 			}

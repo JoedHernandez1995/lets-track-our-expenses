@@ -38,12 +38,6 @@ class ViewExpense extends Component {
 		}
 	}
 
-	componentDidMount(){
-		this.setState({
-	    	labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-	    });
-	}
-
 	handleClick(){
 		var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
 		var self = this;
@@ -93,6 +87,9 @@ class ViewExpense extends Component {
 	}
 
 	componentDidMount(){
+		this.setState({
+	    	labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+	    });
 		this.setState({id: this.props.location.state.id});
 		this.getExpenseDataFromServer();
 	}

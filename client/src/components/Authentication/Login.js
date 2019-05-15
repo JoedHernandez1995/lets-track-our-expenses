@@ -2,10 +2,18 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import axios from "axios";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import { ToastContainer, toast } from 'react-toastify';
-
-import ExpenseList from '../Expenses/ExpenseList';
+import axios from "axios";
 
 class Login extends Component {
 	constructor(props){
@@ -16,7 +24,14 @@ class Login extends Component {
 		}
 	}
 
-
+	componentWillMount(){
+		var userLoggedIn = localStorage.getItem('user') ? true : false;
+		if(userLoggedIn){
+			this.props.history.push({
+		      pathname: '/expenses'
+		    });
+		}
+	}
 
 	handleClick(event){
 		var apiBaseUrl = "http://localhost:5000/authentication/loginUser";
@@ -34,10 +49,9 @@ class Login extends Component {
 					UserId: response.data.UserId
 				}
 				localStorage.setItem("user", JSON.stringify(user_object));
-				console.log("Login successfull");
-				var uploadScreen = [];
-				uploadScreen.push(<ExpenseList appContex={self.props.appContex}/>)
-				self.props.appContext.setState({loginPage: [], uploadScreen:uploadScreen})
+				this.props.history.push({
+			      	pathname: '/expenses'
+			    });
 			} else if (response.status == 204){
 				console.log("Username password do not match");
 				alert("Username password do not match");
@@ -54,24 +68,30 @@ class Login extends Component {
 	render() {
 		return (
 			<div>
-				<MuiThemeProvider>
-					<div>
-						<TextField
-							hintText="Enter your email"
-							floatingLabelText="Email"
-							onChange = {(event, newValue) => this.setState({username:newValue})}
-						/>
-						<br />
-						<TextField
-							type="password"
-							hintText="Enter your password"
-							floatingLabelText="Password"
-							onChange = {(event, newValue) => this.setState({password:newValue})}
-						/>
-						<br/>
-						<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
-					</div>
-				</MuiThemeProvider>
+				<br />
+				<br />
+				<Card style={{marginLeft: '20px', marginRight: '20px'}}>
+					<CardContent>
+						<MuiThemeProvider>
+							<div>
+								<TextField
+									hintText="Enter your email"
+									floatingLabelText="Email"
+									onChange = {(event, newValue) => this.setState({username:newValue})}
+								/>
+								<br />
+								<TextField
+									type="password"
+									hintText="Enter your password"
+									floatingLabelText="Password"
+									onChange = {(event, newValue) => this.setState({password:newValue})}
+								/>
+								<br/>
+								<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+							</div>
+						</MuiThemeProvider>
+					</CardContent>
+				</Card>
 				<ToastContainer autoClose={4000} />
 			</div>
 		);

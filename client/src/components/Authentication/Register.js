@@ -18,6 +18,15 @@ class Register extends Component {
 		
 	}
 
+	componentWillMount(){
+		var userLoggedIn = localStorage.getItem('user') ? true : false;
+		if(userLoggedIn){
+			this.props.history.push({
+		      pathname: '/expenses'
+		    });
+		}
+	}
+
 	handleClick(event){
 		var apiURL = "http://localhost:5000/authentication/createNewUser";
 		var self = this;
