@@ -149,7 +149,7 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 				todaySpent: totalSpentToday,
 				totalExpensesCurrentMonth: totalExpensesCurrentMonth,
 				totalExpenses: totalExpenses,
-				remainingBudget: totalIncome - totalExpenses
+				remainingBudget: totalIncome - totalExpenses,
 			}
 			res.json(expenseData);
 		})
@@ -182,7 +182,7 @@ app.post('/expenses/getFullDashboardData', (req, res) => {
 
 
 
-			//Data for Bar chart
+			//Data for Expenses Categories Bar chart
 			var categories = ["General","Personal","House","Food & Drinks","Transport","Clothes","Fun","Miscellaneous"];
 			var categoryTotals = [];
 			for(var i = 0;i < categories.length; i++){
@@ -307,8 +307,38 @@ app.post('/expenses/getFullDashboardData', (req, res) => {
 				]
 			}
 
+			//Data for Income by types Bar Chart
+			var types = ["Active","Passive","Portfolio"];
+			var typeTotals = [];
+			for(var i = 0;i < types.length; i++){
+				var typeTotal = 0.0;
+				for(var j = 0; j < incomeResult.length; j++){
+					if (types[i] == incomeResult[j].incomeType){
+						typeTotal += incomeResult[j].amount;
+					}
+				}
+				typeTotals.push(typeTotal);
+			}
+
+			var incomeByTypes = {
+				labels: types,
+				datasets: [
+	   				{
+	   						label: "Types",
+	   						data: typeTotals,
+	   						backgroundColor: 'rgba(75,192,192,0.2)',
+					      	borderColor: 'rgba(75,192,192,1)',
+					      	borderWidth: 1,
+					      	hoverBackgroundColor: 'rgba(75,192,192,0.4)',
+					      	hoverBorderColor: 'rgba(75,192,192,1)',
+	   				}
+	   			]
+			}
+
+
 			var totalDashboardData = {
 				expensesByCategories: expensesbyCategories,
+				incomeByTypes: incomeByTypes,
 				incomeVsExpense: incomeVsExpense
 			}
 

@@ -85,7 +85,7 @@ class Dashboard extends Component {
 		return (
 
 			<div className={'safeAreaMargin'}>
-				<h1 style={{color: '#FFFFFF'}}>Dashboard</h1>
+				<h1>Dashboard</h1>
 
 					<Grid container spacing={8}>
 
@@ -156,6 +156,25 @@ class Dashboard extends Component {
 						<Grid item xs={12}>
 							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 								<CardContent>
+									<h5>Money Earned by Income Type</h5>
+									<br />
+									<Bar
+							          	data={this.state.dashBoardData.incomeByTypes}
+							          	width={100}
+							          	height={300}
+							          	options={{
+							            	maintainAspectRatio: false
+							          	}}
+							        />
+								</CardContent>
+							</Card>
+						</Grid>
+					</Grid>
+					<br />
+					<Grid container spacing={8}>
+						<Grid item xs={12}>
+							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
+								<CardContent>
 									<h5>Expenses vs Income</h5>
 									<br />
 									<Line
@@ -170,7 +189,6 @@ class Dashboard extends Component {
 							</Card>
 						</Grid>
 					</Grid>
-				
 			</div>
 		);
 	}

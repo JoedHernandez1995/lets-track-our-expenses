@@ -45,6 +45,13 @@ const styles = theme => ({
 function PermanentDrawerLeft(props) {
   const { classes } = props;
 
+  function logout(event){
+    localStorage.clear();
+    this.props.history.push({
+      pathname: '/'
+    });
+  }
+
   return (
       <Drawer
         className={classes.drawer}
@@ -65,7 +72,7 @@ function PermanentDrawerLeft(props) {
           <ListItem className={"appLink"} button component={Link} to="/income">
             <ListItemText primary="Income" /> 
           </ListItem>
-          <ListItem className={"appLink"} button component={Link} to="/" onClick={()=>localStorage.clear()}> 
+          <ListItem className={"appLink"} button component={Link} to="/" onClick={(event)=>logout(event)}> 
             <ListItemText primary="Logout" /> 
           </ListItem>
         </List>

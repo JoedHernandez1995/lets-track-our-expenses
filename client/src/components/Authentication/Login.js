@@ -3,6 +3,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
 
 import ExpenseList from '../Expenses/ExpenseList';
 
@@ -14,6 +15,8 @@ class Login extends Component {
 			password: ""
 		}
 	}
+
+
 
 	handleClick(event){
 		var apiBaseUrl = "http://localhost:5000/authentication/loginUser";
@@ -51,31 +54,25 @@ class Login extends Component {
 	render() {
 		return (
 			<div>
-				
 				<MuiThemeProvider>
-					
 					<div>
-						
-
 						<TextField
 							hintText="Enter your email"
 							floatingLabelText="Email"
 							onChange = {(event, newValue) => this.setState({username:newValue})}
 						/>
-
 						<br />
-
 						<TextField
 							type="password"
 							hintText="Enter your password"
 							floatingLabelText="Password"
 							onChange = {(event, newValue) => this.setState({password:newValue})}
 						/>
-
 						<br/>
 						<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
 					</div>
 				</MuiThemeProvider>
+				<ToastContainer autoClose={4000} />
 			</div>
 		);
 	}
