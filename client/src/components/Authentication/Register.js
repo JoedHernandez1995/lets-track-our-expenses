@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 import Login from '../Authentication/Login';
 
@@ -65,38 +66,52 @@ class Register extends Component {
 	render(){
 		return (
 			<div>
-		        <MuiThemeProvider>
-		   			<div>
-		           		<TextField
-		             		hintText="Enter your First Name"
-		             		floatingLabelText="First Name"
-		             		onChange = {(event,newValue) => this.setState({first_name:newValue})}
+				<h1>Register</h1>
+					<br />
+					<Grid container spacing={0}
+	  					direction="column"
+	  					alignItems="center"
+	  					justify="center"
+	  					style={{ minHeight: '50vh' }}
+	  				>
+						<Card style={{width: '30%', height: '60vh', borderRadius: '25px'}}>
+								<CardContent>
+									<MuiThemeProvider>
+										<div>
+											<TextField
+							             		hintText="Enter your First Name"
+							             		floatingLabelText="First Name"
+							             		onChange = {(event,newValue) => this.setState({first_name:newValue})}
 
-		             	/>
-		          	 	<br/>
-		           		<TextField
-		             		hintText="Enter your Last Name"
-		             		floatingLabelText="Last Name"
-		             		onChange = {(event,newValue) => this.setState({last_name:newValue})}
-		             	/>
-		           		<br/>
-		           		<TextField
-		             		hintText="Enter your Email"
-		             		type="email"
-		             		floatingLabelText="Email"
-		             		onChange = {(event,newValue) => this.setState({email:newValue})}
-		             	/>
-		           		<br/>
-		           		<TextField
-		             		type = "password"
-		             		hintText="Enter your Password"
-		             		floatingLabelText="Password"
-		             		onChange = {(event,newValue) => this.setState({password:newValue})}
-		             	/>
-		           		<br/>
-		           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-		          	</div>
-		    	</MuiThemeProvider>
+							             	/>
+							          	 	<br/>
+							           		<TextField
+							             		hintText="Enter your Last Name"
+							             		floatingLabelText="Last Name"
+							             		onChange = {(event,newValue) => this.setState({last_name:newValue})}
+							             	/>
+							           		<br/>
+							           		<TextField
+							             		hintText="Enter your Email"
+							             		type="email"
+							             		floatingLabelText="Email"
+							             		onChange = {(event,newValue) => this.setState({email:newValue})}
+							             	/>
+							           		<br/>
+							           		<TextField
+							             		type = "password"
+							             		hintText="Enter your Password"
+							             		floatingLabelText="Password"
+							             		onChange = {(event,newValue) => this.setState({password:newValue})}
+							             	/>
+							           		<br/>
+							           		<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+										</div>
+									</MuiThemeProvider>
+								</CardContent>
+						</Card>
+					</Grid>
+					<ToastContainer autoClose={4000} />
 			</div>
 		)
 	}
