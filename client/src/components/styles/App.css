@@ -42,11 +42,11 @@ body{
 .titleWhileOnline{
   flex: 1;
   text-align: right;
-  color: #AB0043 !important;
+  color: black !important;
 }
 
 .titleNormal{
-  color: #AB0043 !important;
+  color: black !important;
 }
 
 .topNavbarWithMargin{
@@ -58,7 +58,7 @@ body{
 }
 
 .appLink {
-  color: #AB0043;
+  color: black;
 }
 
 @keyframes App-logo-spin {
