@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 
+import Navbar from '../AppComponents/Navbar';
+
 class Login extends Component {
 	constructor(props){
 		super(props);
@@ -17,7 +19,7 @@ class Login extends Component {
 		}
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		var userLoggedIn = localStorage.getItem('user') ? true : false;
 		if(userLoggedIn){
 			this.props.history.push({
@@ -29,38 +31,51 @@ class Login extends Component {
 	handleClick(event){
 		var apiBaseUrl = "http://localhost:5000/authentication/loginUser";
 		var self = this;
-		var payload = {
-			"email":this.state.username,
-			"password":this.state.password
-		}
-		axios.post(apiBaseUrl, payload)
-		.then((response) => {
-			console.log(response);
-			if(response.status == 200){
-				var user_object = {
-					email: response.data.email,
-					UserId: response.data.UserId
-				}
-				localStorage.setItem("user", JSON.stringify(user_object));
-				this.props.history.push({
-			      	pathname: '/expenses'
-			    });
-			} else if (response.status == 204){
-				console.log("Username password do not match");
-				alert("Username password do not match");
-			}else{
-				console.log("Username does not exists");
-				alert("Username does not exists");
+		var validData = true;
+	    //Check for valid data
+	    if (this.state.username == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.password == ''){
+	    	validData = false;
+	    }
+
+	    if(validData){
+
+			var payload = {
+				"email":this.state.username,
+				"password":this.state.password
 			}
-		})
-		.catch((error) => {
-			console.log(error);
-		});
+
+			axios.post(apiBaseUrl, payload)
+			.then((response) => {
+				console.log(response);
+				if(response.status == 200){
+					var user_object = {
+						firstName: response.data.firstName,
+						lastName: response.data.lastName,
+						email: response.data.email,
+						UserId: response.data.UserId
+					}
+					localStorage.setItem("user", JSON.stringify(user_object));
+					self.props.history.push({
+				      	pathname: '/expenses'
+				    });
+				} 
+			})
+			.catch((error) => {
+				toast.error("Email or password does not match!");
+			});
+		}else{
+			toast.error("Please fill out all fields before logging in!");
+		}
 	}
 
 	render() {
 		return (
 			<div>
+				<Navbar />
 				<h1>Login</h1>
 				<br />
 				<Grid container spacing={0}

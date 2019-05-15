@@ -27,37 +27,22 @@ class App extends Component {
 
   constructor(){
     super();
-    this.state = {isLoggedIn: true};
+    this.state = {
+      isLoggedIn: true
+    };
   }
 
-  componentWillMount(){
+  componentDidMount(){
+
 
   }
+
+
 
   render() {
-
-    const isLoggedIn = localStorage.getItem('user') ? true : false;
-
-    let display;
-
-    if (isLoggedIn) {
-
-      display = <div>
-        <Sidebar />
-      </div>
-
-
-    } else {
-
-      display = <div>
-        <Navbar/>
-      </div>
-
-    }
     return (
       <HashRouter>
         <div className="App">
-          {display}
           <Switch>
             <Route exact path="/" component={Login}/>
             <Route exact path="/expenses" component={ExpenseList}/>

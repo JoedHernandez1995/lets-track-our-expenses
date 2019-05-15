@@ -17,6 +17,7 @@ import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pic
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import '../styles/App.css';
+import Sidebar from '../AppComponents/Sidebar';
 
 var date = new Date();
 var year = date.getFullYear();
@@ -128,6 +129,7 @@ class NewExpense extends Component {
 	render() {
 		return (
 			<div className={'safeAreaMargin'}>
+				<Sidebar />
 				<h1>New Expense</h1>
 
 				<Card style={{marginLeft: '20px', marginRight: '20px'}}>

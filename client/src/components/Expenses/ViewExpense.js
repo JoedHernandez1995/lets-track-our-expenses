@@ -15,6 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import { ToastContainer, toast } from 'react-toastify';
+import Sidebar from '../AppComponents/Sidebar';
 
 import axios from 'axios';
 
@@ -121,6 +122,7 @@ class ViewExpense extends Component {
 	render() {
 		return (
 				<div className={'safeAreaMargin'}>
+					<Sidebar />
 					<h1>Expense Data for: {this.state.location}</h1>
 					<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 						<CardContent>

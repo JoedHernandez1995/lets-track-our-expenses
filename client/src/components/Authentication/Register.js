@@ -9,6 +9,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Login from '../Authentication/Login';
+import Navbar from '../AppComponents/Navbar';
 
 class Register extends Component {
 	constructor(props){
@@ -22,7 +23,7 @@ class Register extends Component {
 		
 	}
 
-	componentWillMount(){
+	componentDidMount(){
 		var userLoggedIn = localStorage.getItem('user') ? true : false;
 		if(userLoggedIn){
 			this.props.history.push({
@@ -34,38 +35,63 @@ class Register extends Component {
 	handleClick(event){
 		var apiURL = "http://localhost:5000/authentication/createNewUser";
 		var self = this;
-	    var payload = {
-		    "firstName": this.state.firstName,
-		    "lastName":this.state.lastName,
-		    "email":this.state.email,
-		    "password":this.state.password
+		var validData = true;
+	    //Check for valid data
+	    if (this.state.firstName == ''){
+	    	validData = false;
 	    }
-	    axios.post(apiURL, payload)
-	   	.then(function (response) {
-	    	console.log(response);
-	     	if(response.data.code == 200){
-	      		//  console.log("registration successfull");
-	       		var loginscreen = [];
-	       		loginscreen.push(<Login parentContext={this}/>);
-	       		var loginmessage = "Not Registered yet.Go to registration";
-	       		self.props.parentContext.setState(
-	       			{
-	       				loginscreen:loginscreen,
-	       				loginmessage:loginmessage,
-	       				buttonLabel:"Register",
-	       				isLogin:true
-	        		}
-	        	);
-	     	}
-	   	})
-	   	.catch(function (error) {
-	     	console.log(error);
-	   	});
+
+	    if (this.state.lastName == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.email == ''){
+	    	validData = false;
+	    }
+
+	    if (this.state.password == ''){
+	    	validData = false;
+	    }
+
+	    if (validData){
+		    var payload = {
+			    "firstName": this.state.firstName,
+			    "lastName":this.state.lastName,
+			    "email":this.state.email,
+			    "password":this.state.password
+		    }
+		    axios.post(apiURL, payload)
+		   	.then(function (response) {
+		    	console.log(response);
+		     	if(response.status == 200){
+		     		toast.success("Registration Successfull!");
+		     		console.log("What is self");
+		     		console.log(self);
+		     		var user_object = {
+						firstName: response.data.firstName,
+						lastName: response.data.lastName,
+						email: response.data.email,
+						UserId: response.data.UserId
+					}
+					localStorage.setItem("user", JSON.stringify(user_object));
+					self.props.history.push({
+				      	pathname: '/expenses'
+				    });
+		     	}
+		   	})
+		   	.catch(function (error) {
+		   		toast.error("User with the same email already exists!");
+		     	console.log(error);
+		   	});
+		}else{
+			toast.error("Please fill out all information for registering!");
+		}
 	}
 
 	render(){
 		return (
 			<div>
+				<Navbar />
 				<h1>Register</h1>
 					<br />
 					<Grid container spacing={0}
@@ -79,19 +105,22 @@ class Register extends Component {
 									<MuiThemeProvider>
 										<div>
 											<TextField
+												value={this.state.firstName}
 							             		hintText="Enter your First Name"
 							             		floatingLabelText="First Name"
-							             		onChange = {(event,newValue) => this.setState({first_name:newValue})}
+							             		onChange = {(event,newValue) => this.setState({firstName:newValue})}
 
 							             	/>
 							          	 	<br/>
 							           		<TextField
+							           			value={this.state.lastName}
 							             		hintText="Enter your Last Name"
 							             		floatingLabelText="Last Name"
-							             		onChange = {(event,newValue) => this.setState({last_name:newValue})}
+							             		onChange = {(event,newValue) => this.setState({lastName:newValue})}
 							             	/>
 							           		<br/>
 							           		<TextField
+							           			value={this.state.email}
 							             		hintText="Enter your Email"
 							             		type="email"
 							             		floatingLabelText="Email"
@@ -99,6 +128,7 @@ class Register extends Component {
 							             	/>
 							           		<br/>
 							           		<TextField
+							           			value={this.state.password}
 							             		type = "password"
 							             		hintText="Enter your Password"
 							             		floatingLabelText="Password"

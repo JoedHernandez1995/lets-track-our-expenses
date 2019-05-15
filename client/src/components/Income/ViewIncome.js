@@ -16,6 +16,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
+import Sidebar from '../AppComponents/Sidebar';
 
 import '../styles/App.css';
 
@@ -154,6 +155,7 @@ class ViewIncome extends Component {
 	render() {
 		return (
 			<div className={'safeAreaMargin'}>
+				<Sidebar />
 				<h1>Income Data for: {this.state.label}</h1>
 				<Card style={{marginLeft: '20px', marginRight: '20px'}}>
 					<CardContent>

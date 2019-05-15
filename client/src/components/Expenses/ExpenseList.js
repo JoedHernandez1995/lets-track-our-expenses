@@ -12,7 +12,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-
+import Sidebar from '../AppComponents/Sidebar';
 import MUIDataTable from "mui-datatables";
 
 import axios from 'axios';
@@ -32,6 +32,7 @@ class ExpenseList extends Component {
 	}
 
 	componentWillMount(){
+
 		this.getAllExpensesFromServer();
 	}
 
@@ -164,6 +165,7 @@ class ExpenseList extends Component {
 
 		return (
 			<div className={'safeAreaMargin'}>
+				<Sidebar />
 				<h1>Expenses</h1>
 
 				<div style={{flex: 1, marginLeft: '20px', marginRight: '20px'}}>

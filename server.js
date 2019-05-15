@@ -1,11 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const models = require('./models/index');
-
 const app = express();
 const path = require('path');
 const port = process.env.PORT || 5000;
+const bcrypt = require('bcrypt');
 const { Op } = require('sequelize');
 
 
@@ -60,31 +59,69 @@ app.get('/getAllUsers', (req, res) => {
 app.post('/authentication/loginUser', (req, res) => {
 	models.User.findOne({
 		where: {
-			email: req.body.email,
-			password: req.body.password
+			email: req.body.email
 		}
-	}).then((result) => {
-		if(result){
-			const UserData = {
-				firstName: result.firstName,
-				lastName: result.lastName,
-				email: result.email,
-				UserId: result.id
-			}
-			res.json(UserData);
+	}).then((user) => {
+		console.log(req.body.password);
+		console.log(user.password);
+		if(user){
+			bcrypt.compare(req.body.password, user.password, function(err, result){
+				console.log(result);
+				if(result == true){
+					const UserData = {
+						firstName: user.firstName,
+						lastName: user.lastName,
+						email: user.email,
+						UserId: user.id
+					}
+					res.json(UserData);
+				}else{
+					res.status(401);
+					res.send("Incorrect Password!");
+				}
+			});
+		}else{
+			res.status(403);
+			res.send("Email not found!");
 		}
+	}).catch((error) => {
+		res.status(500);
+		res.send("Internal Error Occured");
 	})
 });
 
 app.post('/authentication/createNewUser', (req, res) => {
-	models.User.create({
-		firstName: req.body.firstName,
-		lastName: req.body.lastName,
-		email: req.body.email,
-		password: req.body.password
-	}).then((user) => {
-		res.json(user);
+
+	models.User.findOne({
+		where: {
+			email: req.body.email
+		}
+	}).then((result) => {
+		if(result){
+			res.status(403);
+			res.send("User with email already exists!")
+		}else{
+			bcrypt.hash(req.body.password, 10, function(err,hash){
+				models.User.create({
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
+					email: req.body.email,
+					password: hash
+				}).then((user) => {
+					const UserData = {
+						firstName: user.firstName,
+						lastName: user.lastName,
+						email: user.email,
+						UserId: user.id
+					}
+					res.json(UserData);
+				})
+			})
+		}
 	})
+
+	
+	
 });
 
 

@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import Sidebar from '../AppComponents/Sidebar';
 
 import axios from 'axios';
 
@@ -85,6 +86,7 @@ class Dashboard extends Component {
 		return (
 
 			<div className={'safeAreaMargin'}>
+				<Sidebar />
 				<h1>Dashboard</h1>
 
 					<Grid container spacing={8}>
