@@ -87,26 +87,44 @@ class NewIncome extends Component {
 
 	handleClick(event){
 		var apiURL = "http://localhost:5000/incomes/createNewIncome";
-		var self = this;
-	    var payload = {
-	    	"amount": this.state.amount,
-			"date": this.state.date,
-			"label": this.state.label,
-			"incomeType": this.state.incomeType,
-			"incomeTypeCategory": this.state.incomeTypeCategory,
-			"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+		var validData = true;
+	    var self = this;
+
+	    //Check for valid data
+	    if (this.state.amount == ''){
+	    	validData = false;
 	    }
-	    axios.post(apiURL, payload)
-	   	.then(function (response) {
-	    	console.log(response);
-	     	if(response.data.code == 200){
-	      		console.log("Income added successfull");
-	    
-	     	}
-	   	})
-	   	.catch(function (error) {
-	     	console.log(error);
-	   	});
+
+	    if (this.state.label == ''){
+	    	validData = false;
+	    }
+
+	    if (validData){
+		    var payload = {
+		    	"amount": this.state.amount,
+				"date": this.state.date,
+				"label": this.state.label,
+				"incomeType": this.state.incomeType,
+				"incomeTypeCategory": this.state.incomeTypeCategory,
+				"UserId": JSON.parse(localStorage.getItem("user")).UserId,
+		    }
+		    axios.post(apiURL, payload)
+		   	.then(function (response) {
+		     	if(response.status == 200){
+		      		toast.success("Income source has been added successfully!");
+		      		self.setState({incomeType: 'Active'});
+		      		self.setState({incomeTypeCategory: 'Salary'});
+		      		self.setState({incomeTypeCategories: ["Salary","Business Profit","Wages","Commissions","Bonus"]});
+		      		self.setState({label: ''});
+		      		self.setState({amount: ''});
+		      		self.setState({date: today});
+		    
+		     	}
+		   	})
+		   	.catch(function (error) {
+		     	toast.error("Please fill out all the expense information!");
+		   	});
+		}
 	}
 
 	render() {

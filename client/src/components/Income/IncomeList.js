@@ -6,6 +6,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import MUIDataTable from "mui-datatables";
+import Tooltip from '@material-ui/core/Tooltip';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+import { ToastContainer, toast } from 'react-toastify';
 
 import axios from 'axios';
 
@@ -48,31 +53,30 @@ class Income extends Component {
 	   	});
 	}
 
-	viewExpense(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
-		/*var c = this.componentInstance;
-		var currentExpenseIndex = rowMeta.dataIndex;
-		var expenseID = c.state.expenses[currentExpenseIndex].id;
+	viewIncome(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
+		var c = this.componentInstance;
+		var currentIncomeIndex = rowMeta.dataIndex;
+		var incomeID = c.state.incomeList[currentIncomeIndex].id;
 		c.props.history.push({
-			pathname: '/expenses/viewExpense',
+			pathname: '/income/viewIncome',
 			state: {
-				id: expenseID
+				id: incomeID
 			}
-		});*/
+		});
 		
 	}
 
-	deleteExpense(rowsDeleted: array){
-		/*var c = this.componentInstance; 
+	deleteIncome(rowsDeleted: array){
+		var c = this.componentInstance; 
 		var promises = [];
-		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+		var apiURL = "http://localhost:5000/incomes/deleteIncomeByIncomeId";
 
 		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
-			var expenseObject = c.state.expenses[dataIndex];
+			var incomeObject = c.state.incomeList[dataIndex];
 			var payload = {
-				id: expenseObject.id,
-				index: dataIndex
+				id: incomeObject.id
 			}
 			promises.push(axios.post(apiURL, payload));
 		}
@@ -86,18 +90,18 @@ class Income extends Component {
 			console.log(response.length)
 			for(var i = 0; i < response.length; i++){
 				var index = response[i].data.deletedIndex;
-				c.state.expenses.splice(index, 1);
+				c.state.incomeList.splice(index, 1);
 			}
 			if(response.length > 1){
-				toast.info("Expenses have been deleted!");
+				toast.info("Incomes have been deleted!");
 			}else if(response.length == 1){
-				toast.info("Expense has been deleted!");
+				toast.info("Income has been deleted!");
 			}
 			
 		})
 		.catch(function (error){
 			toast.error("An error has occured!");
-		});*/
+		});
 	}
 
 	render() {
@@ -209,19 +213,12 @@ class Income extends Component {
 						</Grid>
 					</Grid>
 				</div>
-				<br />
-				<br></br>
-				<h5>Total Income: {this.state.totalIncome} </h5>
-				<br></br>
-				{this.state.incomeList.map((income,index) => {
-					return <li>
-								{income.label}
-								<Link to={{ pathname: '/income/viewIncome', state: {id: income.id}}}> View </Link>  
-								<a onClick={(event) => this.deleteIncome(income.id,index)}> Delete </a>
-							</li>
-				})}
-				<br></br>
-				<Link to={'/income/newIncome'}> Add NewIncome </Link>
+				<Tooltip title="Add New Income" aria-label="Add New Expense">
+					<Fab component={Link} to='/income/newIncome' color="primary" aria-label="Add" style={{position: 'fixed', bottom: '20px', right: '20px', backgroundColor: 'green'}}>
+				 		<AddIcon />
+				  	</Fab>
+				</Tooltip>
+				<ToastContainer autoClose={4000} />
 			</div>
 		);
 	}

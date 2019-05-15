@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
@@ -25,6 +26,7 @@ class ViewExpense extends Component {
 	constructor(){
 		super();
 		this.state = {
+			labelWidth: 0,
 			id: 0,
 			expenseType: '',
 			category: '',
@@ -37,7 +39,9 @@ class ViewExpense extends Component {
 	}
 
 	componentDidMount(){
-		
+		this.setState({
+	    	labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
+	    });
 	}
 
 	handleClick(){

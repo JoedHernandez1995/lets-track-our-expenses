@@ -374,7 +374,9 @@ app.post('/incomes/createNewIncome', (req, res) => {
 		amount: req.body.amount,
 		date: req.body.date,
 		label: req.body.label,
-		UserId: req.body.UserId
+		UserId: req.body.UserId,
+		incomeType: req.body.incomeType,
+		incomeTypeCategory: req.body.incomeTypeCategory,
 	}).then((expense) => {
 		res.json(expense);
 	})
@@ -467,7 +469,7 @@ app.post('/incomes/updateIncomeByIncomeId', (req, res) => {
 	})
 });
 
-app.post('/expenses/deleteIncomeByIncomeId', (req, res) => {
+app.post('/incomes/deleteIncomeByIncomeId', (req, res) => {
 	models.Income.destroy({
 		where: {
 			id: req.body.id

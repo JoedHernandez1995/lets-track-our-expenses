@@ -77,8 +77,7 @@ class ExpenseList extends Component {
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
 			var payload = {
-				id: expenseObject.id,
-				index: dataIndex
+				id: expenseObject.id
 			}
 			promises.push(axios.post(apiURL, payload));
 		}
