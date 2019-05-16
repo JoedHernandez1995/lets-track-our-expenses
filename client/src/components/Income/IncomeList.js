@@ -67,6 +67,21 @@ class Income extends Component {
 		
 	}
 
+	getCurrentMonth(){
+		var date = new Date();
+		var m = date.getMonth();
+		m += 1;
+		return m
+	}
+
+
+	getMonthFromDate(input){
+		var date = new Date(input);
+		var m = date.getMonth();
+		m += 1;
+		return m 
+	}
+
 	deleteIncome(rowsDeleted: array){
 		var c = this.componentInstance; 
 		var promises = [];
@@ -76,6 +91,17 @@ class Income extends Component {
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var incomeObject = c.state.incomeList[dataIndex];
+
+			//Check if today
+			if (incomeObject.date == today){
+				c.setState({todayEarned: c.state.todayEarned - incomeObject.amount});
+			}
+			//Check if currentMonth
+			if(c.getMonthFromDate(incomeObject.date) == c.getCurrentMonth){
+				c.setState({totalIncomeCurrentMonth: c.state.totalIncomeCurrentMonth - incomebject.amount});
+			}
+			c.setState({totalIncome: c.state.totalIncome - incomeObject.amount});
+
 			var payload = {
 				id: incomeObject.id
 			}

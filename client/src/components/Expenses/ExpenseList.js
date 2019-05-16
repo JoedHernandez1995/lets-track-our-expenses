@@ -147,7 +147,7 @@ class ExpenseList extends Component {
 				c.setState({todaySpent: c.state.todaySpent - expenseObject.cost});
 			}
 			//Check if currentMonth
-			if(this.getMonthFromDate(expenseObject.date) == this.getCurrentMonth){
+			if(c.getMonthFromDate(expenseObject.date) == c.getCurrentMonth){
 				c.setState({totalExpensesCurrentMonth: c.state.totalExpensesCurrentMonth - expenseObject.cost});
 			}
 			c.setState({totalExpenses: c.state.totalExpenses - expenseObject.cost});
