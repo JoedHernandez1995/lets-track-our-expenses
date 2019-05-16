@@ -111,7 +111,7 @@ class ViewExpense extends Component {
 
 	getExpenseDataFromServer(){
 		var c = this;
-		var apiURL = "http://localhost:5000/expenses/getExpenseDataByIdAndUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id
