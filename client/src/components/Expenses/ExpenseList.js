@@ -49,6 +49,50 @@ class ExpenseList extends Component {
 	   		c.setState({todaySpent: response.data.todaySpent});
 	   		c.setState({totalExpensesCurrentMonth: response.data.totalExpensesCurrentMonth});
 	   		c.setState({remainingBudget: response.data.remainingBudget});
+
+	   		//Detect highest category on which money is being spent
+
+	   		var data = response.data.totalsByCategory;
+
+	   		if (response.data.expenseList.length == 0){
+	   			toast.info(`Hey ${JSON.parse(localStorage.getItem("user")).firstName} ${JSON.parse(localStorage.getItem("user")).lastName} You haven't spent a single dime!`);
+	   		}else{
+	   			var max = data.reduce(function(prev,current){
+		   			return (prev.categoryTotal > current.categoryTotal) ? prev : current;
+		   		});
+
+		   		switch(max.categoryName){
+		   			case "General":
+		   				toast.info(`You are spending your money without a cause!`);
+		   				break;
+		   			case "Personal":
+		   				toast.info(`You like treating yourself a little too much huh?`);
+		   				break;
+		   			case "House":
+		   				toast.info(`Looks like you need a new place to live!`);
+		   				break;
+		   			case "Food & Drinks":
+		   				toast.info(`Have you considered meal prepping?`);
+		   				break;
+		   			case "Transport":
+		   				toast.info(`Having a car is like having a child.`);
+		   				break;
+		   			case "Clothes":
+		   				toast.info(`You sure enjoy being fashion!`);
+		   				break;
+		   			case "Fun":
+		   				toast.info(`You only live once`);
+		   				break; 
+		   			case "Miscellaneous":
+		   				toast.info(`Gifts? Donations? I don't know but your money is going somewhere.`);
+		   				break;
+		   			default:
+		   				toast.info(`Your money just dissappeard into nothingness!`);
+		   				break;
+		   		}
+	   		}
+
+	   		
 	   	})
 	   	.catch(function (error) {
 	     	console.log(error);
@@ -71,7 +115,7 @@ class ExpenseList extends Component {
 	deleteExpense(rowsDeleted: array){
 		var c = this.componentInstance; 
 		var promises = [];
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
+		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
 
 		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){

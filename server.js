@@ -183,8 +183,26 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 				totalIncome += entry.dataValues.amount;
 			});
 
+			var categories = ["General","Personal","House","Food & Drinks","Transport","Clothes","Fun","Miscellaneous"];
+			var categoryTotals = [];
+			for(var i = 0;i < categories.length; i++){
+				var categoryTotal = 0.0;
+				for(var j = 0; j < expenseResult.length; j++){
+					if (categories[i] == expenseResult[j].category){
+						categoryTotal += expenseResult[j].cost;
+					}
+				}
+				categoryTotals.push(
+					{
+						categoryName: categories[i],
+						categoryTotal: categoryTotal
+					}
+				);
+			}
+
 			var expenseData = {
 				expenseList: expenseResult,
+				totalsByCategory: categoryTotals,
 				todaySpent: totalSpentToday,
 				totalExpensesCurrentMonth: totalExpensesCurrentMonth,
 				totalExpenses: totalExpenses,
