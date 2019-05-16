@@ -134,6 +134,8 @@ class ExpenseList extends Component {
 	}
 
 	deleteExpense(rowsDeleted: array){
+
+		console.log(rowsDeleted);
 		var c = this.componentInstance; 
 		var promises = [];
 		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
@@ -151,7 +153,7 @@ class ExpenseList extends Component {
 				c.setState({totalExpensesCurrentMonth: c.state.totalExpensesCurrentMonth - expenseObject.cost});
 			}
 			c.setState({totalExpenses: c.state.totalExpenses - expenseObject.cost});
-			c.setState({remainingBudget: c.state.remainingBudget - c.state.totalExpenses});
+			c.setState({remainingBudget: c.state.remainingBudget + c.state.totalExpenses});
 			var payload = {
 				id: expenseObject.id
 			}
@@ -159,7 +161,6 @@ class ExpenseList extends Component {
 		}
 
 		console.log(promises);
-
 		axios.all(promises)
 		.then(function(response){
 			console.log("RESPONSE");
