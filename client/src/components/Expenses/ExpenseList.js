@@ -132,8 +132,9 @@ class ExpenseList extends Component {
 		return m 
 	}
 
-	deleteExpense = (rowsDeleted: array) => {
+	deleteExpense = (event,rowsDeleted: array) => {
 		console.log(this);
+		console.log(event);
 		console.log(rowsDeleted);
 		var c = this.componentInstance; 
 		var promises = [];
@@ -235,7 +236,7 @@ class ExpenseList extends Component {
 		  		filename: 'expense-list.csv', 
 		  	},
 		  	onRowClick: this.viewExpense,
-		  	onRowsDelete: this.deleteExpense
+		  	onRowsDelete: (event, rowsDeleted) => this.deleteExpense(event, rowsDeleted)
 		};
 
 		return (
