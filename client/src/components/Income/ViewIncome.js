@@ -77,7 +77,7 @@ class ViewIncome extends Component {
 	}
 
 	handleClick(){
-		var apiURL = "http://localhost:5000/incomes/updateIncomeByIncomeId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/updateIncomeByIncomeId";
 		var self = this;
 		var validData = true;
 	     //Check for valid data
@@ -120,7 +120,7 @@ class ViewIncome extends Component {
 
 	getIncomeDataFromServer(){
 		var c = this;
-		var apiURL = "http://localhost:5000/incomes/getIncomeDataByIdAndUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getIncomeDataByIdAndUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id

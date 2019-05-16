@@ -37,7 +37,7 @@ class Income extends Component {
 		var totalExpenses = 0;
 		var totalIncome = 0;
 		var c = this;
-		var apiURL = "http://localhost:5000/incomes/getAllIncomesByUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getAllIncomesByUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}
@@ -70,7 +70,7 @@ class Income extends Component {
 	deleteIncome(rowsDeleted: array){
 		var c = this.componentInstance; 
 		var promises = [];
-		var apiURL = "http://localhost:5000/incomes/deleteIncomeByIncomeId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/deleteIncomeByIncomeId";
 
 		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){
