@@ -37,8 +37,7 @@ class ExpenseList extends Component {
 		}
 	}
 
-	componentWillMount(){
-
+	componentDidMount(){
 		this.getAllExpensesFromServer();
 	}
 
