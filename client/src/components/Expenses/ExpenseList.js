@@ -133,14 +133,14 @@ class ExpenseList extends Component {
 		return m 
 	}
 
-	deleteExpense(rowsDeleted: object(lookup: {dataindex: boolean}, data: arrayOfObjects: {index, dataIndex})){
+	deleteExpense(rowsDeleted: array){
 
 		console.log(rowsDeleted);
 		var c = this.componentInstance; 
 		var promises = [];
 		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
 
-		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
+		/*//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
@@ -179,7 +179,7 @@ class ExpenseList extends Component {
 		})
 		.catch(function (error){
 			toast.error("An error has occured!");
-		});
+		});*/
 	}
 
 	render() {
