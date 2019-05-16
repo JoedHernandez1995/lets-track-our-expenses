@@ -230,6 +230,8 @@ class ExpenseList extends Component {
 			componentInstance: this,
 		  	filterType: 'dropdown',
 		  	print: false,
+		  	filter: false,
+		  	viewColumns: false,
 		  	downloadOptions: {
 		  		filename: 'expense-list.csv', 
 		  	},

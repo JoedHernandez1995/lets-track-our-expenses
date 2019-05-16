@@ -17,6 +17,12 @@ import axios from 'axios';
 
 import '../styles/App.css';
 
+var date = new Date();
+var year = date.getFullYear();
+var month = ((date.getMonth()) + 1).toString();
+var day = (date.getDate()).toString();
+var today = month + "/" + day + "/" + year;
+
 class Income extends Component {
 	constructor(){
 		super();
@@ -98,7 +104,7 @@ class Income extends Component {
 			}
 			//Check if currentMonth
 			if(c.getMonthFromDate(incomeObject.date) == c.getCurrentMonth){
-				c.setState({totalIncomeCurrentMonth: c.state.totalIncomeCurrentMonth - incomebject.amount});
+				c.setState({totalIncomeCurrentMonth: c.state.totalIncomeCurrentMonth - incomeObject.amount});
 			}
 			c.setState({totalIncome: c.state.totalIncome - incomeObject.amount});
 
@@ -180,6 +186,8 @@ class Income extends Component {
 			componentInstance: this,
 		  	filterType: 'dropdown',
 		  	print: false,
+		  	filter: false,
+		  	viewColumns: false,
 		  	downloadOptions: {
 		  		filename: 'income-list.csv', 
 		  	},
