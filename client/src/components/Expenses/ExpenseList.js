@@ -133,8 +133,8 @@ class ExpenseList extends Component {
 		return m 
 	}
 
-	deleteExpense(rowsDeleted: array){
-
+	deleteExpense(rowsDeleted: array, event){
+		console.log(event);
 		console.log(rowsDeleted);
 		var c = this.componentInstance; 
 		var promises = [];
