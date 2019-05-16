@@ -147,10 +147,11 @@ class ExpenseList extends Component {
 				c.setState({todaySpent: c.state.todaySpent - expenseObject.cost});
 			}
 			//Check if currentMonth
-			if(c.getMonthFromDate(expenseObject.date) == c.getCurrentMonth){
+			if(c.getMonthFromDate(expenseObject.date) == c.getCurrentMonth()){
 				c.setState({totalExpensesCurrentMonth: c.state.totalExpensesCurrentMonth - expenseObject.cost});
 			}
 			c.setState({totalExpenses: c.state.totalExpenses - expenseObject.cost});
+			c.setState({remainingBudget: c.state.remainingBudget - c.state.totalExpenses});
 			var payload = {
 				id: expenseObject.id
 			}
