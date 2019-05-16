@@ -62,7 +62,7 @@ class Dashboard extends Component {
 
 	getFullDashboardData(){
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/getFullDashboardData";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/dashboard/getFullDashboardData";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			startDate: this.state.startDate,

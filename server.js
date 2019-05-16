@@ -119,9 +119,6 @@ app.post('/authentication/createNewUser', (req, res) => {
 			})
 		}
 	})
-
-	
-	
 });
 
 
@@ -214,7 +211,7 @@ app.post('/expenses/getAllExpensesByUserId', (req, res) => {
 	})
 });
 
-app.post('/expenses/getFullDashboardData', (req, res) => {
+app.post('/dashboard/getFullDashboardData', (req, res) => {
 	models.Expense.findAll({
 		where: {
 			UserId: req.body.UserId,

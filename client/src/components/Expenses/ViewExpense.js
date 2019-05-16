@@ -39,6 +39,16 @@ class ViewExpense extends Component {
 		}
 	}
 
+	parseDate(date){
+		var date = new Date(date);
+		var year = date.getFullYear();
+		var month = ((date.getMonth()) + 1).toString();
+		month = month.length > 1 ? month : "0" + month;
+		var day = (date.getDate()).toString();
+		day = day.length > 1 ? day : "0" + day;
+		return month + "/" + day + "/" + year;
+	}
+
 	handleClick(){
 		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/updateExpenseByExpenseId";
 		var self = this;
@@ -87,6 +97,10 @@ class ViewExpense extends Component {
 		}
 	}
 
+	handleDateChange = (date: any) => {
+		this.setState({date:this.parseDate(date)});
+	}
+
 	componentDidMount(){
 		this.setState({
 	    	labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
@@ -97,7 +111,7 @@ class ViewExpense extends Component {
 
 	getExpenseDataFromServer(){
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
+		var apiURL = "http://localhost:5000/expenses/getExpenseDataByIdAndUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id

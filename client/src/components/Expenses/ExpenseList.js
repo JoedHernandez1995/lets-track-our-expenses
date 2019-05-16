@@ -115,7 +115,7 @@ class ExpenseList extends Component {
 	deleteExpense(rowsDeleted: array){
 		var c = this.componentInstance; 
 		var promises = [];
-		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
 
 		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
 		for(var i = 0; i < rowsDeleted.data.length; i++){
