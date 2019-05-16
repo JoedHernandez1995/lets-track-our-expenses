@@ -18,6 +18,12 @@ import MUIDataTable from "mui-datatables";
 import axios from 'axios';
 import '../styles/App.css';
 
+var date = new Date();
+var year = date.getFullYear();
+var month = ((date.getMonth()) + 1).toString();
+var day = (date.getDate()).toString();
+var today = month + "/" + day + "/" + year;
+
 class ExpenseList extends Component {
 
 	constructor(){
@@ -112,6 +118,21 @@ class ExpenseList extends Component {
 		
 	}
 
+	getCurrentMonth(){
+		var date = new Date();
+		var m = date.getMonth();
+		m += 1;
+		return m
+	}
+
+
+	getMonthFromDate(input){
+		var date = new Date(input);
+		var m = date.getMonth();
+		m += 1;
+		return m 
+	}
+
 	deleteExpense(rowsDeleted: array){
 		var c = this.componentInstance; 
 		var promises = [];
@@ -121,6 +142,15 @@ class ExpenseList extends Component {
 		for(var i = 0; i < rowsDeleted.data.length; i++){
 			var dataIndex = rowsDeleted.data[i].dataIndex;
 			var expenseObject = c.state.expenses[dataIndex];
+			//Check if today
+			if (expenseObject.date == today){
+				c.setState({todaySpent: c.state.todaySpent - expenseObject.cost});
+			}
+			//Check if currentMonth
+			if(this.getMonthFromDate(expenseObject.date) == this.getCurrentMonth){
+				c.setState({totalExpensesCurrentMonth: c.state.totalExpensesCurrentMonth - expenseObject.cost});
+			}
+			c.setState({totalExpenses: c.state.totalExpenses - expenseObject.cost});
 			var payload = {
 				id: expenseObject.id
 			}
