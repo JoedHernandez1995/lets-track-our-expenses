@@ -173,24 +173,6 @@ class Dashboard extends Component {
 						</Grid>
 					</Grid>
 					<br />
-					<Grid container spacing={8}>
-						<Grid item xs={12}>
-							<Card style={{marginLeft: '20px', marginRight: '20px'}}>
-								<CardContent>
-									<h5>Expenses vs Income</h5>
-									<br />
-									<Line
-							          	data={this.state.dashBoardData.incomeVsExpense}
-							          	width={100}
-							          	height={300}
-							          	options={{
-							            	maintainAspectRatio: false
-							          	}}
-							        />
-								</CardContent>
-							</Card>
-						</Grid>
-					</Grid>
 			</div>
 		);
 	}
