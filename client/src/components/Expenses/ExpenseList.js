@@ -133,7 +133,7 @@ class ExpenseList extends Component {
 		return m 
 	}
 
-	deleteExpense(rowsDeleted: array){
+	deleteExpense(rowsDeleted: object(lookup: {dataindex: boolean}, data: arrayOfObjects: {index, dataIndex})){
 
 		console.log(rowsDeleted);
 		var c = this.componentInstance; 
@@ -165,7 +165,7 @@ class ExpenseList extends Component {
 		.then(function(response){
 			console.log("RESPONSE");
 			console.log(response);
-			console.log(response.length)
+			console.log(response.length);
 			for(var i = 0; i < response.length; i++){
 				var index = response[i].data.deletedIndex;
 				c.state.expenses.splice(index, 1);
@@ -230,7 +230,6 @@ class ExpenseList extends Component {
 
 		const options = {
 			componentInstance: this,
-		  	filterType: 'dropdown',
 		  	print: false,
 		  	filter: false,
 		  	viewColumns: false,
