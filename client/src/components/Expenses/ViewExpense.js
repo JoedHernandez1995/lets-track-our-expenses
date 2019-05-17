@@ -218,7 +218,7 @@ class ViewExpense extends Component {
 										            <MenuItem value={'General'}>General</MenuItem>
 										            <MenuItem value={'Personal'}>Personal</MenuItem>
 										            <MenuItem value={'House'}>House</MenuItem>
-										            <MenuItem value={'Food-Drinks'}>Food & Drinks</MenuItem>
+										            <MenuItem value={'Food & Drinks'}>Food & Drinks</MenuItem>
 										            <MenuItem value={'Transport'}>Transport</MenuItem>
 										            <MenuItem value={'Clothes'}>Clothes</MenuItem>
 										            <MenuItem value={'Fun'}>Fun</MenuItem>
