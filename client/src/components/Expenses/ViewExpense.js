@@ -53,8 +53,8 @@ class ViewExpense extends Component {
 	deleteExpense = (event) => {
 		var c = this;
 		event.preventDefault();
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
-		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
+		//var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
 		axios.post(apiURL, {id: this.state.id})
 		.then(function (response) {
 		    if(response.status == 200){
@@ -69,8 +69,8 @@ class ViewExpense extends Component {
 	}
 
 	handleClick = (event) => {
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/updateExpenseByExpenseId";
-		var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/updateExpenseByExpenseId";
+		//var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
 
 		var self = this;
 		var validData = true;
@@ -132,8 +132,8 @@ class ViewExpense extends Component {
 
 	getExpenseDataFromServer(){
 		var c = this;
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
-		var apiURL = "http://localhost:5000/expenses/getExpenseDataByIdAndUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
+		//var apiURL = "http://localhost:5000/expenses/getExpenseDataByIdAndUserId";
 
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,

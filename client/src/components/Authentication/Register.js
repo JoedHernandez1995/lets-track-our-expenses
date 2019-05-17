@@ -33,8 +33,8 @@ class Register extends Component {
 	}
 
 	handleClick(event){
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/authentication/createNewUser";
-		var apiURL = "http://localhost:5000/authentication/createNewUser";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/authentication/createNewUser";
+		//var apiURL = "http://localhost:5000/authentication/createNewUser";
 
 		var self = this;
 		var validData = true;

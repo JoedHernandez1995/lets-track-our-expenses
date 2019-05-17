@@ -80,8 +80,8 @@ class ViewIncome extends Component {
 	deleteIncome = (event) => {
 		var c = this;
 		event.preventDefault();
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/deleteIncomeByIncomeId";
-		var apiURL = "http://localhost:5000/incomes/deleteIncomeByIncomeId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/deleteIncomeByIncomeId";
+		//var apiURL = "http://localhost:5000/incomes/deleteIncomeByIncomeId";
 		axios.post(apiURL, {id: this.state.id})
 		.then(function (response) {
 		    if(response.status == 200){
@@ -96,8 +96,8 @@ class ViewIncome extends Component {
 	}
 
 	handleClick(){
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/updateIncomeByIncomeId";
-		var apiURL = "http://localhost:5000/incomes/updateIncomeByIncomeId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/updateIncomeByIncomeId";
+		//var apiURL = "http://localhost:5000/incomes/updateIncomeByIncomeId";
 		var self = this;
 		var validData = true;
 	     //Check for valid data
@@ -140,8 +140,8 @@ class ViewIncome extends Component {
 
 	getIncomeDataFromServer(){
 		var c = this;
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getIncomeDataByIdAndUserId";
-		var apiURL = "http://localhost:5000/incomes/getIncomeDataByIdAndUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getIncomeDataByIdAndUserId";
+		//var apiURL = "http://localhost:5000/incomes/getIncomeDataByIdAndUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id

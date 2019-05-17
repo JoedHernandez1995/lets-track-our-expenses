@@ -43,8 +43,8 @@ class ExpenseList extends Component {
 
 	getAllExpensesFromServer(){
 		var c = this;
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getAllExpensesByUserId";
-		var apiURL = "http://localhost:5000/expenses/getAllExpensesByUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getAllExpensesByUserId";
+		//var apiURL = "http://localhost:5000/expenses/getAllExpensesByUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}

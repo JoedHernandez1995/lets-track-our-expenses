@@ -43,8 +43,8 @@ class Income extends Component {
 		var totalExpenses = 0;
 		var totalIncome = 0;
 		var c = this;
-		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getAllIncomesByUserId";
-		var apiURL = "http://localhost:5000/incomes/getAllIncomesByUserId";
+		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getAllIncomesByUserId";
+		//var apiURL = "http://localhost:5000/incomes/getAllIncomesByUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}
