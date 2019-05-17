@@ -17,6 +17,7 @@ import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pic
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import Sidebar from '../AppComponents/Sidebar';
+import Button from '@material-ui/core/Button';
 
 import '../styles/App.css';
 
@@ -76,8 +77,27 @@ class ViewIncome extends Component {
 		
 	}
 
+	deleteIncome = (event) => {
+		var c = this;
+		event.preventDefault();
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/deleteIncomeByIncomeId";
+		var apiURL = "http://localhost:5000/incomes/deleteIncomeByIncomeId";
+		axios.post(apiURL, {id: this.state.id})
+		.then(function (response) {
+		    if(response.status == 200){
+		    	c.props.history.push({
+			    	pathname: '/income'
+			    });
+		    }
+		})
+		.catch(function (error) {
+			console.log(error);
+		});	
+	}
+
 	handleClick(){
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/updateIncomeByIncomeId";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/updateIncomeByIncomeId";
+		var apiURL = "http://localhost:5000/incomes/updateIncomeByIncomeId";
 		var self = this;
 		var validData = true;
 	     //Check for valid data
@@ -120,7 +140,8 @@ class ViewIncome extends Component {
 
 	getIncomeDataFromServer(){
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getIncomeDataByIdAndUserId";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getIncomeDataByIdAndUserId";
+		var apiURL = "http://localhost:5000/incomes/getIncomeDataByIdAndUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id
@@ -252,7 +273,11 @@ class ViewIncome extends Component {
 						             	<br />
 						             	<br />
 						             	<br />
-										<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>							        </Grid>
+										<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+										<Button variant="contained" style={{backgroundColor: '#D82B2B', color: "white"}} onClick={(event) => this.deleteIncome(event)}>
+											Delete Income
+										</Button>							        
+									</Grid>
 								</Grid>
 				          	</div>
 				    	</MuiThemeProvider>

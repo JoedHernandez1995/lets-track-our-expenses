@@ -43,7 +43,8 @@ class ExpenseList extends Component {
 
 	getAllExpensesFromServer(){
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getAllExpensesByUserId";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getAllExpensesByUserId";
+		var apiURL = "http://localhost:5000/expenses/getAllExpensesByUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}
@@ -104,11 +105,10 @@ class ExpenseList extends Component {
 	   	});
 	}
 
-	viewExpense(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
-		var c = this.componentInstance;
+	viewExpense = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
 		var currentExpenseIndex = rowMeta.dataIndex;
-		var expenseID = c.state.expenses[currentExpenseIndex].id;
-		c.props.history.push({
+		var expenseID = this.state.expenses[currentExpenseIndex].id;
+		this.props.history.push({
 			pathname: '/expenses/viewExpense',
 			state: {
 				id: expenseID
@@ -130,56 +130,6 @@ class ExpenseList extends Component {
 		var m = date.getMonth();
 		m += 1;
 		return m 
-	}
-
-	deleteExpense = (event,rowsDeleted: array) => {
-		console.log(this);
-		console.log(event);
-		console.log(rowsDeleted);
-		var c = this.componentInstance; 
-		var promises = [];
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
-
-		/*//Since these are concurrent calls, I am using promises to wait for all requests before continuing
-		for(var i = 0; i < rowsDeleted.data.length; i++){
-			var dataIndex = rowsDeleted.data[i].dataIndex;
-			var expenseObject = c.state.expenses[dataIndex];
-			//Check if today
-			if (expenseObject.date == today){
-				c.setState({todaySpent: c.state.todaySpent - expenseObject.cost});
-			}
-			//Check if currentMonth
-			if(c.getMonthFromDate(expenseObject.date) == c.getCurrentMonth()){
-				c.setState({totalExpensesCurrentMonth: c.state.totalExpensesCurrentMonth - expenseObject.cost});
-			}
-			c.setState({totalExpenses: c.state.totalExpenses - expenseObject.cost});
-			c.setState({remainingBudget: c.state.remainingBudget + c.state.totalExpenses});
-			var payload = {
-				id: expenseObject.id
-			}
-			promises.push(axios.post(apiURL, payload));
-		}
-
-		console.log(promises);
-		axios.all(promises)
-		.then(function(response){
-			console.log("RESPONSE");
-			console.log(response);
-			console.log(response.length);
-			for(var i = 0; i < response.length; i++){
-				var index = response[i].data.deletedIndex;
-				c.state.expenses.splice(index, 1);
-			}
-			if(response.length > 1){
-				toast.info("Expenses have been deleted!");
-			}else if(response.length == 1){
-				toast.info("Expense has been deleted!");
-			}
-			
-		})
-		.catch(function (error){
-			toast.error("An error has occured!");
-		});*/
 	}
 
 	render() {
@@ -235,8 +185,8 @@ class ExpenseList extends Component {
 		  	downloadOptions: {
 		  		filename: 'expense-list.csv', 
 		  	},
-		  	onRowClick: this.viewExpense,
-		  	onRowsDelete: (event, rowsDeleted) => this.deleteExpense(event, rowsDeleted)
+		  	selectableRows: "none",
+		  	onRowClick: this.viewExpense
 		};
 
 		return (

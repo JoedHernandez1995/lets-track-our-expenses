@@ -43,7 +43,8 @@ class Income extends Component {
 		var totalExpenses = 0;
 		var totalIncome = 0;
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getAllIncomesByUserId";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/getAllIncomesByUserId";
+		var apiURL = "http://localhost:5000/incomes/getAllIncomesByUserId";
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId
 		}
@@ -60,11 +61,10 @@ class Income extends Component {
 	   	});
 	}
 
-	viewIncome(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }){
-		var c = this.componentInstance;
+	viewIncome = (rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => {
 		var currentIncomeIndex = rowMeta.dataIndex;
-		var incomeID = c.state.incomeList[currentIncomeIndex].id;
-		c.props.history.push({
+		var incomeID = this.state.incomeList[currentIncomeIndex].id;
+		this.props.history.push({
 			pathname: '/income/viewIncome',
 			state: {
 				id: incomeID
@@ -88,54 +88,6 @@ class Income extends Component {
 		return m 
 	}
 
-	deleteIncome(rowsDeleted: array){
-		var c = this.componentInstance; 
-		var promises = [];
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/deleteIncomeByIncomeId";
-
-		//Since these are concurrent calls, I am using promises to wait for all requests before continuing
-		for(var i = 0; i < rowsDeleted.data.length; i++){
-			var dataIndex = rowsDeleted.data[i].dataIndex;
-			var incomeObject = c.state.incomeList[dataIndex];
-
-			//Check if today
-			if (incomeObject.date == today){
-				c.setState({todayEarned: c.state.todayEarned - incomeObject.amount});
-			}
-			//Check if currentMonth
-			if(c.getMonthFromDate(incomeObject.date) == c.getCurrentMonth){
-				c.setState({totalIncomeCurrentMonth: c.state.totalIncomeCurrentMonth - incomeObject.amount});
-			}
-			c.setState({totalIncome: c.state.totalIncome - incomeObject.amount});
-
-			var payload = {
-				id: incomeObject.id
-			}
-			promises.push(axios.post(apiURL, payload));
-		}
-
-		console.log(promises);
-
-		axios.all(promises)
-		.then(function(response){
-			console.log("RESPONSE");
-			console.log(response);
-			console.log(response.length)
-			for(var i = 0; i < response.length; i++){
-				var index = response[i].data.deletedIndex;
-				c.state.incomeList.splice(index, 1);
-			}
-			if(response.length > 1){
-				toast.info("Incomes have been deleted!");
-			}else if(response.length == 1){
-				toast.info("Income has been deleted!");
-			}
-			
-		})
-		.catch(function (error){
-			toast.error("An error has occured!");
-		});
-	}
 
 	render() {
 		const columns = [
@@ -183,16 +135,15 @@ class Income extends Component {
 		];
 
 		const options = {
-			componentInstance: this,
 		  	filterType: 'dropdown',
 		  	print: false,
 		  	filter: false,
 		  	viewColumns: false,
+		  	selectableRows: "none",
 		  	downloadOptions: {
 		  		filename: 'income-list.csv', 
 		  	},
-		  	onRowClick: this.viewIncome,
-		  	onRowsDelete: this.deleteIncome
+		  	onRowClick: this.viewIncome
 		};
 
 

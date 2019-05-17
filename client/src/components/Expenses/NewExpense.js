@@ -72,7 +72,9 @@ class NewExpense extends Component {
 	}
 
 	handleClick = (event) => {
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/createNewExpense";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/createNewExpense";
+	    var apiURL = "http://localhost:5000/expenses/createNewExpense";
+
 	    var validData = true;
 	    var self = this;
 	    //Check for valid data

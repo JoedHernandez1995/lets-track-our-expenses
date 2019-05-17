@@ -16,6 +16,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import { ToastContainer, toast } from 'react-toastify';
 import Sidebar from '../AppComponents/Sidebar';
+import Button from '@material-ui/core/Button';
 
 import axios from 'axios';
 
@@ -49,8 +50,28 @@ class ViewExpense extends Component {
 		return month + "/" + day + "/" + year;
 	}
 
-	handleClick(){
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/updateExpenseByExpenseId";
+	deleteExpense = (event) => {
+		var c = this;
+		event.preventDefault();
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/deleteExpenseByExpenseId";
+		var apiURL = "http://localhost:5000/expenses/deleteExpenseByExpenseId";
+		axios.post(apiURL, {id: this.state.id})
+		.then(function (response) {
+		    if(response.status == 200){
+		    	c.props.history.push({
+			    	pathname: '/expenses'
+			    });
+		    }
+		})
+		.catch(function (error) {
+			console.log(error);
+		});	
+	}
+
+	handleClick = (event) => {
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/updateExpenseByExpenseId";
+		var apiURL = "http://localhost:5000/expenses/updateExpenseByExpenseId";
+
 		var self = this;
 		var validData = true;
 	    //Check for valid data
@@ -111,7 +132,9 @@ class ViewExpense extends Component {
 
 	getExpenseDataFromServer(){
 		var c = this;
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/expenses/getExpenseDataByIdAndUserId";
+		var apiURL = "http://localhost:5000/expenses/getExpenseDataByIdAndUserId";
+
 		var payload = {
 			UserId: JSON.parse(localStorage.getItem("user")).UserId,
 			id: c.props.location.state.id
@@ -249,6 +272,11 @@ class ViewExpense extends Component {
 							             	/>
 							             	<br/>
 							             	<RaisedButton label="Update" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+
+							             	<Button variant="contained" style={{backgroundColor: '#D82B2B', color: "white"}} onClick={(event) => this.deleteExpense(event)}>
+										    	Delete Expense 
+										   	</Button>
+							             	
 								        </Grid>
 									</Grid>
 					          	</div>

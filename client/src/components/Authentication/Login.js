@@ -29,7 +29,8 @@ class Login extends Component {
 	}
 
 	handleClick(event){
-		var apiBaseUrl = "https://lets-track-our-expenses.herokuapp.com/authentication/loginUser";
+		//var apiBaseUrl = "https://lets-track-our-expenses.herokuapp.com/authentication/loginUser";
+		var apiBaseUrl = "http://localhost:5000/authentication/loginUser"
 		var self = this;
 		var validData = true;
 	    //Check for valid data

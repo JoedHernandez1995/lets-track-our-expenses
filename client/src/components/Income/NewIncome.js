@@ -87,7 +87,8 @@ class NewIncome extends Component {
 	}
 
 	handleClick(event){
-		var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/createNewIncome";
+		//var apiURL = "https://lets-track-our-expenses.herokuapp.com/incomes/createNewIncome";
+		var apiURL = "http://localhost:5000/incomes/createNewIncome";
 		var validData = true;
 	    var self = this;
 
